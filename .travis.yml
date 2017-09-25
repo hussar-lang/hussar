@@ -1,5 +1,6 @@
 language: go
-  go:
+
+go:
     - 1.x
     - 1.6.x
     - 1.7.x
