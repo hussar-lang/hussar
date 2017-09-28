@@ -4,4 +4,4 @@
  [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php) 
 
 
-This is my implementation of the Monkey interpreter in Go, based on Thorsten Ball's [Writing and Interprer in Go](https://interpreterbook.com/) with my own changes, extensions and improvements (coming soon).
+This is my implementation of the Monkey interpreter in Go, based on Thorsten Ball's [Writing an Interprer in Go](https://interpreterbook.com/) with my own changes, extensions and improvements (coming soon).
