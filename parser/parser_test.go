@@ -23,7 +23,7 @@ func TestLetStatements(t *testing.T) {
 		t.Fatalf("ParseProgram() returned nil")
 	}
 	if len(program.Statements) != 3 {
-		t.Fatalf("program.Statements does not contain 3 statements. Got: %d", len(program.Statements))
+		t.Fatalf("program.Statements has an incorrect amount of statements. Expected: %d, got: %d", 3, len(program.Statements))
 	}
 
 	tests := []struct {
@@ -56,17 +56,17 @@ func TestReturnStataments(t *testing.T) {
 	checkParserErrors(t, p)
 
 	if len(program.Statements) != 3 {
-		t.Fatalf("program.Statements does not contain 3 statements. Got: %d", len(program.Statements))
+		t.Fatalf("program.Statements has an incorrect amount of statements. Expected: %d, got: %d", 3, len(program.Statements))
 	}
 
 	for _, stmt := range program.Statements {
 		returnStmt, ok := stmt.(*ast.ReturnStatement)
 		if !ok {
-			t.Errorf("stmt not *ast.ReturnStatement. Got: %T", stmt)
+			t.Errorf("stmt is incorrect type. Expected: %s, got: %T", "*ast.ReturnStatement", stmt)
 			continue
 		}
 		if returnStmt.TokenLiteral() != "return" {
-			t.Errorf("returnStmt.TokenLiteral not 'return'. Got: %q", returnStmt.TokenLiteral())
+			t.Errorf("returnStmt.TokenLiteral incorrect. Expected: '%s', got: %q", "return", returnStmt.TokenLiteral())
 		}
 	}
 }
@@ -80,22 +80,50 @@ func TestIdentifierExpression(t *testing.T) {
 	checkParserErrors(t, p)
 
 	if len(program.Statements) != 1 {
-		t.Fatalf("program has an incorrect amount of statements. Expected: %d, got: %d", 1, len(program.Statements))
+		t.Fatalf("program.Statements has an incorrect amount of statements. Expected: %d, got: %d", 1, len(program.Statements))
 	}
 	stmt, ok := program.Statements[0].(*ast.ExpressionStatement)
 	if !ok {
-		t.Fatalf("program.Statements[0] is incorrect type. Expected %s, got: %T", "*ast.ExpressionStatement", program.Statements[0])
+		t.Fatalf("program.Statements[0] is incorrect type. Expected: %s, got: %T", "*ast.ExpressionStatement", program.Statements[0])
 	}
 
 	ident, ok := stmt.Expression.(*ast.Identifier)
 	if !ok {
-		t.Fatalf("stmt.Expressions is incorrect type. Expected %s, got: %T", "*ast.Identifier", stmt.Expression)
+		t.Fatalf("stmt.Expressions is incorrect type. Expected: %s, got: %T", "*ast.Identifier", stmt.Expression)
 	}
 	if ident.Value != "foobar" {
-		t.Errorf("ident.Value is incorrect. Expected %s, got: %s", "foobar", ident.Value)
+		t.Errorf("ident.Value is incorrect. Expected: %s, got: %s", "foobar", ident.Value)
 	}
 	if ident.TokenLiteral() != "foobar" {
-		t.Errorf("ident.TokenLiteral is incorrect. Expected %s, got %s", "foobar", ident.TokenLiteral())
+		t.Errorf("ident.TokenLiteral is incorrect. Expected: %s, got %s", "foobar", ident.TokenLiteral())
+	}
+}
+
+func TestIntegerLiteralExpression(t *testing.T) {
+	input := "5;"
+
+	l := lexer.New(input)
+	p := New(l)
+	program := p.ParseProgram()
+	checkParserErrors(t, p)
+
+	if len(program.Statements) != 1 {
+		t.Fatalf("program.Statements has an incorrect amount of statements. Expected: %d, got: %d", 1, len(program.Statements))
+	}
+	stmt, ok := program.Statements[0].(*ast.ExpressionStatement)
+	if !ok {
+		t.Fatalf("program.Statements[0] is incorrect type. Expected: %s, got: %T", "*ast.ExpressionStatement", program.Statements[0])
+	}
+
+	literal, ok := stmt.Expression.(*ast.IntegerLiteral)
+	if !ok {
+		t.Fatalf("stmt.Expressions is incorrect type. Expected: %s, got: %T", "*ast.IntegerLiteral", stmt.Expression)
+	}
+	if literal.Value != 5 {
+		t.Errorf("literal.Value incorrect. Expected: %d, got: %d", 5, literal.Value)
+	}
+	if literal.TokenLiteral() != "5" {
+		t.Errorf("literal.TokenLiteral incorrect. Expected: %s, got: %s", "5", literal.TokenLiteral())
 	}
 }
 
