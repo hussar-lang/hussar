@@ -16,3 +16,5 @@
 
 # Golang project vendor packages which should be ignored
 vendor/
+
+*.todo
