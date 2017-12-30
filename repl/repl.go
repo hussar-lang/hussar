@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/fatih/color"
+
 	"github.com/kscarlett/kmonkey/lexer"
 	"github.com/kscarlett/kmonkey/token"
 )
@@ -13,9 +15,10 @@ const PROMPT = ">> "
 
 func Start(in io.Reader, out io.Writer) {
 	scanner := bufio.NewScanner(in)
+	pColor := color.New(color.FgCyan, color.Bold)
 
 	for {
-		fmt.Printf(PROMPT)
+		pColor.Printf(PROMPT)
 		scanned := scanner.Scan()
 		if !scanned {
 			return
