@@ -9,6 +9,8 @@ import (
 	"github.com/kscarlett/kmonkey/token"
 )
 
+const TRACE = false
+
 const (
 	_ int = iota
 	LOWEST
@@ -164,7 +166,9 @@ func (p *Parser) parseReturnStatement() *ast.ReturnStatement {
 }
 
 func (p *Parser) parseExpressionStatement() *ast.ExpressionStatement {
-	defer untrace(trace("parseExpressionStatement"))
+	if TRACE {
+		defer untrace(trace("parseExpressionStatement"))
+	}
 
 	stmt := &ast.ExpressionStatement{Token: p.curToken}
 
@@ -178,7 +182,9 @@ func (p *Parser) parseExpressionStatement() *ast.ExpressionStatement {
 }
 
 func (p *Parser) parseExpression(precedence int) ast.Expression {
-	defer untrace(trace("parseExpression"))
+	if TRACE {
+		defer untrace(trace("parseExpression"))
+	}
 
 	prefix := p.prefixParseFns[p.curToken.Type]
 	if prefix == nil {
@@ -206,7 +212,9 @@ func (p *Parser) parseIdentifier() ast.Expression {
 }
 
 func (p *Parser) parseIntegerLiteral() ast.Expression {
-	defer untrace(trace("parseIntegerLiteral"))
+	if TRACE {
+		defer untrace(trace("parseIntegerLiteral"))
+	}
 
 	lit := &ast.IntegerLiteral{Token: p.curToken}
 
@@ -223,7 +231,9 @@ func (p *Parser) parseIntegerLiteral() ast.Expression {
 }
 
 func (p *Parser) parsePrefixExpression() ast.Expression {
-	defer untrace(trace("parsePrefixExpression"))
+	if TRACE {
+		defer untrace(trace("parsePrefixExpression"))
+	}
 
 	expression := &ast.PrefixExpression{
 		Token:    p.curToken,
@@ -238,7 +248,9 @@ func (p *Parser) parsePrefixExpression() ast.Expression {
 }
 
 func (p *Parser) parseInfixExpression(left ast.Expression) ast.Expression {
-	defer untrace(trace("parseInfixExpression"))
+	if TRACE {
+		defer untrace(trace("parseInfixExpression"))
+	}
 
 	expression := &ast.InfixExpression{
 		Token:    p.curToken,
