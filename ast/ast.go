@@ -22,6 +22,7 @@ type Expression interface {
 	expressionNode()
 }
 
+// === PROGRAM ===
 // Program is the root node of the AST
 type Program struct {
 	Statements []Statement
