@@ -7,6 +7,8 @@ go:
   - tip
 
 before_install:
+  - go get -t -v ./...
+  - chmod +x go.test.s
   - go get github.com/mitchellh/gox
   - go get github.com/tcnksm/ghr
   - go get github.com/axw/gocov/gocov
@@ -14,8 +16,8 @@ before_install:
   - go get golang.org/x/tools/cmd/cover
 
 script:
-  - go test -v -covermode=count -coverprofile=coverage.out ./...
-  - goveralls -coverprofile=coverage.out -service travis-ci -repotoken $COVERALLS_TOKEN
+  - ./go.test.sh
+  - goveralls -coverprofile=coverage.txt -service travis-ci -repotoken $COVERALLS_TOKEN
 
 after_success:
   - gox -output "dist/{{.OS}}_{{.Arch}}_{{.Dir}}"
