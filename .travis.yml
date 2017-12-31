@@ -8,7 +8,7 @@ go:
 
 before_install:
   - go get -t -v ./...
-  - chmod +x go.test.s
+  - chmod +x go.test.sh
   - go get github.com/mitchellh/gox
   - go get github.com/tcnksm/ghr
   - go get github.com/axw/gocov/gocov
