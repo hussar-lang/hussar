@@ -2,11 +2,14 @@ package object
 
 import (
 	"fmt"
+
+	"github.com/ttacon/chalk"
 )
 
 type ObjectType string
 
 const (
+	ERROR_OBJ        = "ERROR"
 	INTEGER_OBJ      = "INTEGER"
 	BOOLEAN_OBJ      = "BOOLEAN"
 	NULL_OBJ         = "NULL"
@@ -16,6 +19,25 @@ const (
 type Object interface {
 	Type() ObjectType
 	Inspect() string
+}
+
+// === Errors ===
+type Error struct {
+	Severity string
+	Message  string
+}
+
+func (e *Error) Type() ObjectType { return ERROR_OBJ }
+func (e *Error) Inspect() string {
+	errColor := chalk.Red.NewStyle().WithTextStyle(chalk.Bold).Style
+	warnColor := chalk.Yellow.NewStyle().WithTextStyle(chalk.Bold).WithTextStyle(chalk.Dim).Style
+
+	switch e.Severity {
+	case "warn":
+		return warnColor("[WARN]  ") + e.Message
+	default:
+		return errColor("[ERROR] ") + e.Message
+	}
 }
 
 // === Integer ===

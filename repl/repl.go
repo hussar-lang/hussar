@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"io"
 
-	"github.com/fatih/color"
+	"github.com/ttacon/chalk"
 
 	"github.com/kscarlett/kmonkey/evaluator"
 	"github.com/kscarlett/kmonkey/lexer"
@@ -15,10 +15,10 @@ const PROMPT = ">> "
 
 func Start(in io.Reader, out io.Writer) {
 	scanner := bufio.NewScanner(in)
-	pColor := color.New(color.FgCyan, color.Bold)
+	promptColor := chalk.Cyan.NewStyle().WithTextStyle(chalk.Bold).Style
 
 	for {
-		pColor.Printf(PROMPT)
+		io.WriteString(out, promptColor(PROMPT))
 		scanned := scanner.Scan()
 		if !scanned {
 			return
@@ -42,11 +42,10 @@ func Start(in io.Reader, out io.Writer) {
 }
 
 func printParserErrors(out io.Writer, errors []string) {
-	err := color.New(color.FgRed, color.Bold)
+	errColor := chalk.Red.NewStyle().WithTextStyle(chalk.Bold).Style
 
-	err.Println("ERROR!")
+	io.WriteString(out, errColor("PARSER ERROR!\n"))
 	for _, msg := range errors {
-		err.Print("  [!] ")
-		io.WriteString(out, msg+"\n")
+		io.WriteString(out, errColor("  [!] ")+msg+"\n")
 	}
 }
