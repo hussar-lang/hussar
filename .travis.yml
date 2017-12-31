@@ -3,14 +3,21 @@ sudo: false
 go:
   - 1.7.x
   - 1.8.x
+  - 1.9.x
   - tip
 
 before_install:
-  - go get -t -v ./...
-  - chmod +x go.test.sh
+  - go get github.com/mitchellh/gox
+  - gox -build-toolchain
+  - go get github.com/tcnksm/ghr
+  - go get github.com/axw/gocov/gocov
+  - go get github.com/mattn/goveralls
+  - go get golang.org/x/tools/cmd/cover
 
 script:
-  - ./go.test.sh
+  - go test -v -covermode=count -coverprofile=coverage.out ./...
+  - goveralls -coverprofile=coverage.out -service travis-ci -repotoken $COVERALLS_TOKEN
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - gox -output "dist/{{.OS}}_{{.Arch}}_{{.Dir}}"
+  - ghr --username kscarlett --token $GITHUB_TOKEN --replace --prerelease --debug pre-release dist/

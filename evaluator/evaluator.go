@@ -135,6 +135,7 @@ func evalIfExpression(ie *ast.IfExpression) object.Object {
 }
 
 func isTruthy(obj object.Object) bool {
+	// modify to possibly change conditionals to prefer falsy over truthy
 	switch obj {
 	case NULL:
 		return false
