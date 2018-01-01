@@ -2,6 +2,7 @@ package evaluator
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/kscarlett/kmonkey/ast"
 	"github.com/kscarlett/kmonkey/object"
@@ -42,6 +43,9 @@ func Eval(node ast.Node, env *object.Environment) object.Object {
 	// Expressions
 	case *ast.IntegerLiteral:
 		return &object.Integer{Value: node.Value}
+
+	case *ast.StringLiteral:
+		return &object.String{Value: node.Value}
 
 	case *ast.Boolean:
 		return nativeBoolToBooleanObject(node.Value)
@@ -148,6 +152,8 @@ func evalInfixExpression(operator string, left object.Object, right object.Objec
 		return nativeBoolToBooleanObject(left == right)
 	case operator == "!=":
 		return nativeBoolToBooleanObject(left != right)
+	case left.Type() == object.STRING_OBJ || right.Type() == object.STRING_OBJ:
+		return evalStringInfixExpression(operator, left, right)
 	case left.Type() != right.Type():
 		return newError("error", "Type mismatch: %s %s %s", left.Type(), operator, right.Type())
 	default:
@@ -206,6 +212,26 @@ func evalIntegerInfixExpression(operator string, left object.Object, right objec
 	}
 }
 
+func evalStringInfixExpression(operator string, left object.Object, right object.Object) object.Object {
+	if operator != "+" {
+		return newError("error", "Unknown operator: %s %s %s", left.Type(), operator, right.Type())
+	}
+
+	left = getStringValue(left)
+	if isError(left) {
+		return left
+	}
+	leftVal := left.(*object.String).Value
+
+	right = getStringValue(right)
+	if isError(right) {
+		return right
+	}
+	rightVal := right.(*object.String).Value
+
+	return &object.String{Value: leftVal + rightVal}
+}
+
 func evalIfExpression(ie *ast.IfExpression, env *object.Environment) object.Object {
 	condition := Eval(ie.Condition, env)
 
@@ -244,12 +270,15 @@ func evalWhileExpression(we *ast.WhileExpression, env *object.Environment) objec
 }
 
 func evalIdentifier(node *ast.Identifier, env *object.Environment) object.Object {
-	val, ok := env.Get(node.Value)
-	if !ok {
-		return newError("warn", "Identifier not found: %s", node.Value)
+	if val, ok := env.Get(node.Value); ok {
+		return val
 	}
 
-	return val
+	if builtin, ok := builtins[node.Value]; ok {
+		return builtin
+	}
+
+	return newError("warn", "Identifier not found: %s", node.Value)
 }
 
 func evalExpressions(exps []ast.Expression, env *object.Environment) []object.Object {
@@ -267,14 +296,19 @@ func evalExpressions(exps []ast.Expression, env *object.Environment) []object.Ob
 }
 
 func applyFunction(fn object.Object, args []object.Object) object.Object {
-	function, ok := fn.(*object.Function)
-	if !ok {
+	switch fn := fn.(type) {
+
+	case *object.Function:
+		extendedEnv := extendFunctionEnv(fn, args)
+		evaluated := Eval(fn.Body, extendedEnv)
+		return unwrapReturnValue(evaluated)
+
+	case *object.Builtin:
+		return fn.Fn(args...)
+
+	default:
 		return newError("error", "Not a function: %s", fn.Type())
 	}
-
-	extendedEnv := extendFunctionEnv(function, args)
-	evaluated := Eval(function.Body, extendedEnv)
-	return unwrapReturnValue(evaluated)
 }
 
 func extendFunctionEnv(fn *object.Function, args []object.Object) *object.Environment {
@@ -285,6 +319,26 @@ func extendFunctionEnv(fn *object.Function, args []object.Object) *object.Enviro
 	}
 
 	return env
+}
+
+func getStringValue(obj object.Object) object.Object {
+	switch obj.Type() {
+	case object.STRING_OBJ:
+		str, ok := obj.(*object.String)
+		if !ok {
+			return newError("error", "Unable to convert to String: %T (%+v)", obj, obj)
+		}
+		return str
+	case object.INTEGER_OBJ:
+		val, ok := obj.(*object.Integer)
+		if !ok {
+			return newError("error", "Unable to convert to String: %T (%+v)", obj, obj)
+		}
+		str := strconv.FormatInt(val.Value, 10)
+		return &object.String{Value: str}
+	default:
+		return newError("error", "Unable to convert to String: %T (%+v)", obj, obj)
+	}
 }
 
 func unwrapReturnValue(obj object.Object) object.Object {
