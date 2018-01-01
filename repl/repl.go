@@ -8,6 +8,7 @@ import (
 
 	"github.com/kscarlett/kmonkey/evaluator"
 	"github.com/kscarlett/kmonkey/lexer"
+	"github.com/kscarlett/kmonkey/object"
 	"github.com/kscarlett/kmonkey/parser"
 )
 
@@ -15,6 +16,7 @@ const PROMPT = ">> "
 
 func Start(in io.Reader, out io.Writer) {
 	scanner := bufio.NewScanner(in)
+	env := object.NewEnvironment()
 	promptColor := chalk.Cyan.NewStyle().WithTextStyle(chalk.Bold).Style
 
 	for {
@@ -33,7 +35,7 @@ func Start(in io.Reader, out io.Writer) {
 			continue
 		}
 
-		evaluated := evaluator.Eval(program)
+		evaluated := evaluator.Eval(program, env)
 		if evaluated != nil {
 			io.WriteString(out, evaluated.Inspect())
 			io.WriteString(out, "\n")

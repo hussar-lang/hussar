@@ -215,6 +215,27 @@ func (ie *IfExpression) String() string {
 	return out.String()
 }
 
+// === WHILE EXPRESSION ===
+
+type WhileExpression struct {
+	Token     token.Token
+	Condition Expression
+	Body      *BlockStatement
+}
+
+func (we *WhileExpression) expressionNode()      {}
+func (we *WhileExpression) TokenLiteral() string { return we.Token.Literal }
+func (we *WhileExpression) String() string {
+	var out bytes.Buffer
+
+	out.WriteString("while")
+	out.WriteString(we.Condition.String())
+	out.WriteString(" ")
+	out.WriteString(we.Body.String())
+
+	return out.String()
+}
+
 // === BLOCK STATEMENT ===
 
 type BlockStatement struct {
