@@ -8,7 +8,7 @@ let fib = fn(x) {
     }
 
     return fib(x-1) + fib(x-2);
-};
+}
 
 let main = fn() {
     let fibTest = fib(10);
@@ -17,6 +17,6 @@ let main = fn() {
     } else {
         return true;
     }
-};
+}
 
 main();
