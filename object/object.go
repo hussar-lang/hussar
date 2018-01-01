@@ -34,7 +34,7 @@ type Error struct {
 func (e *Error) Type() ObjectType { return ERROR_OBJ }
 func (e *Error) Inspect() string {
 	errColor := chalk.Red.NewStyle().WithTextStyle(chalk.Bold).Style
-	warnColor := chalk.Yellow.NewStyle().WithTextStyle(chalk.Bold).WithTextStyle(chalk.Dim).Style
+	warnColor := chalk.Yellow.NewStyle().WithTextStyle(chalk.Bold).Style
 
 	switch e.Severity {
 	case "warn":
