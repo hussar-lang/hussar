@@ -256,17 +256,24 @@ func evalWhileExpression(we *ast.WhileExpression, env *object.Environment) objec
 	}
 
 	var result object.Object
-	for isTruthy(condition) {
 
-		result = Eval(we.Body, env)
-		if isError(result) {
-			return result
+	for {
+		if isTruthy(Eval(we.Condition, env)) {
+			e := Eval(we.Body, env)
+			if isError(e) {
+				return e
+			}
+			if ret, ok := e.(*object.ReturnValue); ok {
+				return ret
+			}
+			result = e
+		} else {
+			break
 		}
-
-		//return unwrapReturnValue(result)
 	}
 
-	return unwrapReturnValue(result)
+	return NULL
+	return unwrapReturnValue(result) //temp unused to test
 }
 
 func evalIdentifier(node *ast.Identifier, env *object.Environment) object.Object {

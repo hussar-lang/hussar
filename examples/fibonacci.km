@@ -1,3 +1,5 @@
+// A quick fibonacci example. Currently returns true if it has the correct result.
+
 let fib = fn(x) {
     if (x == 0) {
         return 0;

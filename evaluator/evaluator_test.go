@@ -317,6 +317,55 @@ func TestStringConcatenation(t *testing.T) {
 	}
 }
 
+func TestWhileLoop(t *testing.T) {
+	tests := []struct {
+		input    string
+		expected int64
+	}{
+		{
+			`
+			let a = 10
+
+			while (a > 3) {
+			    let a = a - 2;
+			}
+
+			return a;
+			`,
+			2,
+		},
+		{
+			`
+			let a = 1
+
+			while (a > 3) {
+			    let a = a - 1;
+			}
+
+			return a;
+			`,
+			1,
+		},
+		{
+			`
+			let a = 10
+
+			while (a > 3) {
+				let a = a -1
+			    return 20;
+			}
+
+			return a;
+			`,
+			20,
+		},
+	}
+
+	for _, tt := range tests {
+		testIntegerObject(t, testEval(tt.input), tt.expected)
+	}
+}
+
 func TestBuiltinFunctions(t *testing.T) {
 	tests := []struct {
 		input    string

@@ -20,3 +20,4 @@ coverage.out
 vendor/
 
 *.todo
+/bin
