@@ -24,8 +24,10 @@ func TestNextToken(t *testing.T) {
 		return false;
 	}
 
+	//comment
+	
 	10 == 10;
-	10 != 9;
+	10 != 9; // Inline comment
 	"foobar"
 	"foo bar"
 	`

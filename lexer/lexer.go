@@ -21,13 +21,17 @@ func New(input string) *Lexer {
 }
 
 func (l *Lexer) NextToken() token.Token {
-	var tok token.Token
-
 	l.skipWhitespace()
+
+	if l.ch == '/' && l.peekCharIs('/') {
+		l.skipComment()
+	}
+
+	var tok token.Token
 
 	switch l.ch {
 	case '=':
-		if l.peekChar() == '=' {
+		if l.peekCharIs('=') {
 			ch := l.ch
 			l.readChar()
 			literal := string(ch) + string(l.ch)
@@ -40,7 +44,7 @@ func (l *Lexer) NextToken() token.Token {
 	case '-':
 		tok = newToken(token.MINUS, l.ch)
 	case '!':
-		if l.peekChar() == '=' {
+		if l.peekCharIs('=') {
 			ch := l.ch
 			l.readChar()
 			literal := string(ch) + string(l.ch)
@@ -114,6 +118,10 @@ func (l *Lexer) peekChar() byte {
 	return l.input[l.readPosition]
 }
 
+func (l *Lexer) peekCharIs(c byte) bool {
+	return l.peekChar() == c
+}
+
 func (l *Lexer) readIdentifier() string {
 	position := l.position
 	for isLetter(l.ch) {
@@ -139,6 +147,13 @@ func (l *Lexer) readString() string {
 		}
 	}
 	return l.input[position:l.position]
+}
+
+func (l *Lexer) skipComment() {
+	for l.ch != '\n' && l.ch != '\r' {
+		l.readChar()
+	}
+	l.skipWhitespace()
 }
 
 func (l *Lexer) skipWhitespace() {
