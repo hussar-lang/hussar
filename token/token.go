@@ -12,6 +12,7 @@ type Token struct {
 const (
 	ILLEGAL = "ILLEGAL"
 	EOF     = "EOF"
+	EXIT    = "EXIT"
 
 	// Identifiers + literals
 	IDENT  = "IDENT"
@@ -36,10 +37,12 @@ const (
 	COMMA     = ","
 	SEMICOLON = ";"
 
-	LPAREN = "("
-	RPAREN = ")"
-	LBRACE = "{"
-	RBRACE = "}"
+	LPAREN   = "("
+	RPAREN   = ")"
+	LBRACE   = "{"
+	RBRACE   = "}"
+	LBRACKET = "["
+	RBRACKET = "]"
 
 	// Keywords
 	FUNCTION = "FUNCTION"
@@ -61,6 +64,7 @@ var keywords = map[string]TokenType{
 	"else":   ELSE,
 	"while":  WHILE,
 	"return": RETURN,
+	"exit":   EXIT,
 }
 
 func LookupIdent(ident string) TokenType {

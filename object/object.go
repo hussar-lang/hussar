@@ -20,6 +20,8 @@ const (
 	RETURN_VALUE_OBJ = "RETURN_VALUE"
 	FUNCTION_OBJ     = "FUNCTION"
 	BUILTIN_OBJ      = "BUILTIN"
+	ARRAY_OBJ        = "ARRAY"
+	EXIT_OBJ         = "EXIT"
 )
 
 type Object interface {
@@ -120,3 +122,38 @@ type Builtin struct {
 
 func (b *Builtin) Type() ObjectType { return BUILTIN_OBJ }
 func (b *Builtin) Inspect() string  { return "builtin function" }
+
+// === Array ===
+type Array struct {
+	Elements []Object
+}
+
+func (a *Array) Type() ObjectType { return ARRAY_OBJ }
+func (a *Array) Inspect() string {
+	var out bytes.Buffer
+
+	elements := []string{}
+	for _, e := range a.Elements {
+		elements = append(elements, e.Inspect())
+	}
+
+	out.WriteString("[")
+	out.WriteString(strings.Join(elements, ", "))
+	out.WriteString("]")
+
+	return out.String()
+}
+
+// === Exit ===
+type Exit struct {
+	ExitCode *ast.Expression
+}
+
+func (e *Exit) Type() ObjectType { return EXIT_OBJ }
+func (e *Exit) Inspect() string {
+	var out bytes.Buffer
+
+	out.WriteString("exit()")
+
+	return out.String()
+}

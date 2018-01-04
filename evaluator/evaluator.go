@@ -2,6 +2,7 @@ package evaluator
 
 import (
 	"fmt"
+	"os"
 	"strconv"
 
 	"github.com/kscarlett/kmonkey/ast"
@@ -94,8 +95,17 @@ func Eval(node ast.Node, env *object.Environment) object.Object {
 			return args[0]
 		}
 		return applyFunction(function, args)
-	}
 
+	case *ast.ArrayLiteral:
+		elements := evalExpressions(node.Elements, env)
+		if len(elements) == 1 && isError(elements[0]) {
+			return elements[0]
+		}
+		return &object.Array{Elements: elements}
+
+	case *ast.ExitLiteral:
+		return evalExitLiteral(node, env)
+	}
 	return nil
 }
 
@@ -274,6 +284,32 @@ func evalWhileExpression(we *ast.WhileExpression, env *object.Environment) objec
 
 	return NULL
 	return unwrapReturnValue(result) //temp unused to test
+}
+
+func evalExitLiteral(node *ast.ExitLiteral, env *object.Environment) object.Object {
+	// TODO: make the exit code code work in a less hacky way
+	//code, err := strconv.Atoi(node.ExitCode.String())
+	//if err == nil {
+	//	os.Exit(code)
+	//}
+
+	exp := Eval(node.ExitCode, env)
+
+	code, err := strconv.Atoi(exp.Inspect())
+	if err == nil {
+		os.Exit(code)
+	}
+
+	boolCode, err := strconv.ParseBool(exp.Inspect())
+	if err == nil {
+		if boolCode {
+			os.Exit(0)
+		} else {
+			os.Exit(1)
+		}
+	}
+
+	return newError("error", "Invalid argument given as exit code: %q\n%s", node.ExitCode, err.Error())
 }
 
 func evalIdentifier(node *ast.Identifier, env *object.Environment) object.Object {
