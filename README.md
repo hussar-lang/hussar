@@ -11,7 +11,7 @@ Experimental: [![Build Status](https://travis-ci.org/kscarlett/kmonkey.svg?branc
 ## What's this?
 This is my implementation of the Monkey interpreter in Go, based on Thorsten Ball's [Writing an Interpreter in Go](https://interpreterbook.com/) with my own changes, extensions and improvements (coming soon).
 
-Once the project is more feature complete, I start tagging releases, and the master branch will only contain stable releases. Development will then take place on what is currently the *experimental* branch.
+Once the project is more feature complete, I start tagging releases, and the master branch will only contain stable releases. These releases will follow [SemVer 2.0](https://semver.org/spec/v2.0.0.html) and each major and minor update will be named as well. Development will then take place on what is currently the *experimental* branch.
 
 ## Planned/To Do
 - [x] Add basic recursion.
