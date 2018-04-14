@@ -8,4 +8,18 @@ Experimental: [![Build Status](https://travis-ci.org/kscarlett/kmonkey.svg?branc
 
  [![Documentation Status](https://readthedocs.org/projects/kmonkey/badge/?version=latest)](http://kmonkey.readthedocs.io/en/latest/?badge=latest) [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 
+## What's this?
 This is my implementation of the Monkey interpreter in Go, based on Thorsten Ball's [Writing an Interpreter in Go](https://interpreterbook.com/) with my own changes, extensions and improvements (coming soon).
+
+Once the project is more feature complete, I start tagging releases, and the master branch will only contain stable releases. Development will then take place on what is currently the *experimental* branch.
+
+## Planned/To Do
+- [x] Add basic recursion.
+- [ ] Write documentation.
+- [ ] Refactor existing code for better organisation.
+- [ ] Increase code coverage in critical areas.
+- [ ] LLVM compilation.
+- [ ] More types.
+- [ ] Built in libraries e.g. string handling, filesystem I/O, networking.
+- [ ] Ability to import user defined libraries.
+- [ ] More robust interpreter/compiler/etc -> build system.
