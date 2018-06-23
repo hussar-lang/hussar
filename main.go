@@ -1,24 +1,3 @@
-/*package main
-
-import (
-	"fmt"
-	"os"
-	"os/user"
-
-	"github.com/kscarlett/kmonkey/repl"
-)
-
-func main() {
-	user, err := user.Current()
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Printf("Hello %s! This is the kmonkey programming language!\n", user.Username)
-	fmt.Printf("Feel free to type commands!\n")
-	repl.Start(os.Stdin, os.Stdout)
-}
-*/
 package main
 
 import (
@@ -42,6 +21,7 @@ var (
 	app     = kingpin.New("kmonkey", "The kmonkey interpreter")
 	verbose = app.Flag("verbose", "Enable verbose logging.").Short('v').Bool()
 
+	// TODO: run interactive mode if no subcommand was given
 	interactive = app.Command("interactive", "Interactive REPL")
 
 	run     = app.Command("run", "Run kmonkey code")
