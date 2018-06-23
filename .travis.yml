@@ -1,19 +1,25 @@
 language: go
 sudo: false
-go:
-  - 1.8.x
-  - 1.9.x
-  - 1.10.x
-  - tip
+matrix:
+  include:
+    - go: 1.x
+      env: LATEST=true
+    - go: 1.7.x
+    - go: 1.8.x
+    - go: 1.9.x
+    - go: 1.10.x
+    - go: tip
+  allow_failures:
+    - go: tip
 
 before_install:
   - go get -t -v ./...
-  - chmod +x go.test.sh
+ # - chmod +x go.test.sh
   - go get github.com/mitchellh/gox
   - go get github.com/tcnksm/ghr
-  - go get github.com/axw/gocov/gocov
+ # - go get github.com/axw/gocov/gocov
   - go get github.com/mattn/goveralls
-  - go get golang.org/x/tools/cmd/cover
+ # - go get golang.org/x/tools/cmd/cover
 
 script:
   - $GOPATH/bin/goveralls -service=travis-ci
