@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/hussar-lang/hussary/ast"
+	"github.com/hussar-lang/hussar/ast"
 	"github.com/ttacon/chalk"
 )
 
