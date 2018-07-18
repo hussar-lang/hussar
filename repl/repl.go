@@ -6,10 +6,10 @@ import (
 
 	"github.com/ttacon/chalk"
 
-	"github.com/kscarlett/kmonkey/evaluator"
-	"github.com/kscarlett/kmonkey/lexer"
-	"github.com/kscarlett/kmonkey/object"
-	"github.com/kscarlett/kmonkey/parser"
+	"github.com/hussar-lang/hussar/evaluator"
+	"github.com/hussar-lang/hussar/lexer"
+	"github.com/hussar-lang/hussar/object"
+	"github.com/hussar-lang/hussar/parser"
 )
 
 const PROMPT = ">> "

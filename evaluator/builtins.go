@@ -1,7 +1,7 @@
 package evaluator
 
 import (
-	"github.com/kscarlett/kmonkey/object"
+	"github.com/hussar-lang/hussar/object"
 )
 
 var builtins = map[string]*object.Builtin{

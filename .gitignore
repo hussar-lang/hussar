@@ -4,6 +4,7 @@
 *.dll
 *.so
 *.dylib
+bin/
 
 # Test binary, build with `go test -c`
 *.test
@@ -19,5 +20,8 @@ coverage.out
 # Golang project vendor packages which should be ignored
 vendor/
 
+# Generated to-do files
 *.todo
-/bin
+
+# Compiled Hussar libraries (WIP)
+*.hsc

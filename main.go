@@ -6,11 +6,11 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/kscarlett/kmonkey/evaluator"
-	"github.com/kscarlett/kmonkey/lexer"
-	"github.com/kscarlett/kmonkey/object"
-	"github.com/kscarlett/kmonkey/parser"
-	"github.com/kscarlett/kmonkey/repl"
+	"github.com/hussar-lang/hussar/evaluator"
+	"github.com/hussar-lang/hussar/lexer"
+	"github.com/hussar-lang/hussar/object"
+	"github.com/hussar-lang/hussar/parser"
+	"github.com/hussar-lang/hussar/repl"
 
 	log "github.com/sirupsen/logrus"
 	"github.com/ttacon/chalk"
@@ -21,13 +21,13 @@ var (
 	GitCommit     string
 	VersionString string
 
-	app     = kingpin.New("kmonkey", "The kmonkey interpreter")
+	app     = kingpin.New("hussar", "The Hussar interpreter")
 	verbose = app.Flag("verbose", "Enable verbose logging.").Short('v').Bool()
 
-	// TODO: run interactive mode if no subcommand was given
+	// TODO: run interactive mode if no subcommand was given (see #1)
 	interactive = app.Command("interactive", "Interactive REPL")
 
-	run     = app.Command("run", "Run kmonkey code")
+	run     = app.Command("run", "Run Hussar code")
 	runFile = run.Flag("file", "Code to run").Required().Short('f').ExistingFile()
 )
 
@@ -82,7 +82,7 @@ func runFromFile() {
 }
 
 func startRepl() {
-	fmt.Printf("Starting kmonkey interactive interpreter v%s\n", "0.2.0") // Find a way to get this from app.version
+	fmt.Printf("Starting Hussar interactive interpreter v%s\n", VersionString)
 	repl.Start(os.Stdin, os.Stdout)
 }
 

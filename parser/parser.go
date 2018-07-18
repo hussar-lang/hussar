@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/kscarlett/kmonkey/ast"
-	"github.com/kscarlett/kmonkey/lexer"
-	"github.com/kscarlett/kmonkey/token"
+	"github.com/hussar-lang/hussar/ast"
+	"github.com/hussar-lang/hussar/lexer"
+	"github.com/hussar-lang/hussar/token"
 )
 
 const TRACE = false

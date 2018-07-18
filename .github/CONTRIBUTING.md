@@ -2,7 +2,7 @@
 
 This repository is open to contributions from anyone, but please discuss the change(s) you wish to make by opening an issue first.
 
-If you are unsure where to start, you can look at issues tagged as [help wanted](https://github.com/kscarlett/kmonkey/labels/help_wanted) or [good first issue](https://github.com/kscarlett/kmonkey/labels/good_first_issue).
+If you are unsure where to start, you can look at issues tagged as [help wanted](https://github.com/hussar-lang/hussar/labels/help_wanted) or [good first issue](https://github.com/hussar-lang/hussar/labels/good_first_issue).
 
 Please note we have a [code of conduct](.github/CODE_OF_CONDUCT.md), please follow it in all your interactions with the project.
 

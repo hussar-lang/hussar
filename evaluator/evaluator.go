@@ -5,8 +5,8 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/kscarlett/kmonkey/ast"
-	"github.com/kscarlett/kmonkey/object"
+	"github.com/hussar-lang/hussar/ast"
+	"github.com/hussar-lang/hussar/object"
 )
 
 var (

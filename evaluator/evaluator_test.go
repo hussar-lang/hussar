@@ -1,9 +1,9 @@
 package evaluator
 
 import (
-	"github.com/kscarlett/kmonkey/lexer"
-	"github.com/kscarlett/kmonkey/object"
-	"github.com/kscarlett/kmonkey/parser"
+	"github.com/hussar-lang/hussar/lexer"
+	"github.com/hussar-lang/hussar/object"
+	"github.com/hussar-lang/hussar/parser"
 
 	"testing"
 )
