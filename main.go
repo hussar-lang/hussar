@@ -18,6 +18,9 @@ import (
 )
 
 var (
+	GitCommit     string
+	VersionString string
+
 	app     = kingpin.New("kmonkey", "The kmonkey interpreter")
 	verbose = app.Flag("verbose", "Enable verbose logging.").Short('v').Bool()
 
@@ -34,7 +37,7 @@ func init() {
 }
 
 func main() {
-	app.Version("0.1.0")
+	app.Version(VersionString + " (" + GitCommit + ")")
 	args, err := app.Parse(os.Args[1:])
 
 	if *verbose {
