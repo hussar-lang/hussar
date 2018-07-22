@@ -1,16 +1,38 @@
-# Hussar
+<h1 align="center">
+  <br>
+  <a href="https://www.hussar.io"><img src=".github/hussar.png" alt="Hussar Logo" width="200"></a>
+  <br>
+  Hussar
+  <br>
+</h1>
 
-Master: [![Build Status](https://travis-ci.org/hussar-lang/hussar.svg?branch=master)](https://travis-ci.org/hussar-lang/hussar)
-[![Coverage Status](https://coveralls.io/repos/github/hussar-lang/hussar/badge.svg?branch=master)](https://coveralls.io/github/hussar-lang/hussar?branch=master)
+<h4 align="center">A small programming language (very much under development).</h4>
 
-Development: [![Build Status](https://travis-ci.org/hussar-lang/hussar.svg?branch=develop)](https://travis-ci.org/hussar-lang/hussar)
-[![Coverage Status](https://coveralls.io/repos/github/hussar-lang/hussar/badge.svg?branch=develop)](https://coveralls.io/github/hussar-lang/hussar?branch=develop)
+<p align="center">
+  <a href="https://travis-ci.org/hussar-lang/hussar">
+    <img src="https://travis-ci.org/hussar-lang/hussar.svg?branch=develop"
+         alt="Build Status">
+  </a>
+  <a href="https://codeclimate.com/github/hussar-lang/hussar/maintainability"><img src="https://api.codeclimate.com/v1/badges/7f5869af27d7d9ecf476/maintainability" /></a>
+  <a href="https://opensource.org/licenses/mit-license.php">
+    <img src="https://badges.frapsoft.com/os/mit/mit.svg?v=103"
+         alt="License">
+  </a>
+</p>
 
-[![Documentation Status](https://readthedocs.org/projects/kmonkey/badge/?version=latest)](http://kmonkey.readthedocs.io/en/latest/?badge=latest) [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
+<p align="center">
+  <!--<a href="#key-features">Key Features</a> •-->
+  <a href="#getting-started">Getting Started</a> •
+  <a href="#usage">Usage</a> •
+  <a href="#contributing">Contributing</a> •
+  <a href="#planned">Planned Features</a> •
+  <a href="#versioning">Versioning</a> •
+  <a href="#license">License</a>
+</p>
 
 ## What's this?
 
-This is my implementation of the Monkey interpreter in Go, based on Thorsten Ball's [Writing an Interpreter in Go](https://interpreterbook.com/) with my own changes, extensions and improvements.
+This is my implementation of the Monkey interpreter in Go, based on Thorsten Ball's [Writing an Interpreter in Go](https://interpreterbook.com/) with my own changes, extensions and improvements. There are a lot of big changes planned, so this will probably divert a lot from the original project.
 
 ## Getting Started
 
@@ -28,7 +50,7 @@ An alternative method is to clone the project from this repository directly. You
 
 <!--If you only need the Hussar tools, without the code, you will soon be able to download and install it simply by executing `curl get.hussar.io | sh`, which will ask you for several options and install the right version automatically. -- shhhh, this is coming soon!  -->
 
-### Usage
+## Usage
 
 You can run scripts with the _run_ subcommand, while passing in the script in question.
 
@@ -48,7 +70,7 @@ Once in the interactive mode, you can run code and get the result returned. You 
 
 Please read [CONTRIBUTING.md](.github/CONTRIBUTING.md) for details on how to contribute to this project and our code of conduct.
 
-## Planned/To Do
+## Planned
 
 - [x] Add basic recursion.
 - [ ] Write documentation.
