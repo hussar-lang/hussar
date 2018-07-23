@@ -21,8 +21,9 @@ before_install:
 script:
   - $GOPATH/bin/goveralls -service=travis-ci
 
-deploy:
-  provider: script
-  script: bash deploy.sh
-  on:
-    branch: master
+# NOTE: temporarily disabled automatic uploading of releases - the releases are supposed to be stable, so manual deploys are doable, and the automated pipeline is only causing issues
+#deploy:
+#  provider: script
+#  script: bash deploy.sh
+#  on:
+#    branch: master
