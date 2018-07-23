@@ -37,7 +37,7 @@ func init() {
 }
 
 func main() {
-	app.Version(VersionString + " (" + GitCommit + ")")
+	app.Version(fmt.Sprintf("%s (%s)", VersionString, GitCommit))
 	args, err := app.Parse(os.Args[1:])
 
 	if *verbose {

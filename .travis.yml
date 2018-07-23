@@ -22,13 +22,10 @@ script:
   - $GOPATH/bin/goveralls -service=travis-ci
 
 
-##### THIS NEEDS WORK -- CHECK OTHER LAPTOP FOR CORRECT METHOD + FIND A WAY TO GET THE TAG PRODUCED BY SEMANTIC RELEASE AND ___TEST___!!!!
 after_success:
-  # Use nvm to install and use the Node LTS version (nvm is installed on all Travis images)
-  - nvm install lts/*
-  # Run semantic-release only on one job, after all other are successful
-  - npx travis-deploy-once "npx semantic-release"
-  - export GIT_COMMIT=$(git rev-list -1 HEAD)
-  - export GIT_TAG=$(git describe --tags)
-  - gox -output "dist/{{.OS}}_{{.Arch}}_{{.Dir}}" -ldflags "-X main.GitCommit=$GIT_COMMIT" -ldflags "-X main.VersionString=$GIT_TAG"
-  - ghr --username kscarlett --token $GITHUB_TOKEN --replace --prerelease --debug pre-release dist/
+  on:
+    branch: master
+    - export GIT_COMMIT=$(git rev-list -1 HEAD)
+    - export GIT_TAG=$(git describe --tags)
+    - gox -osarch="windows/amd64 darwin/amd64 linux/amd64 linux/arm" -output "dist/hussar_{{.OS}}-{{.Arch}}" -ldflags "-X main.GitCommit=$GIT_COMMIT" -ldflags "-X main.VersionString=$GIT_TAG"
+    - ghr --username kscarlett --token $GITHUB_TOKEN --replace --prerelease --debug pre-release dist/
