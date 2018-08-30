@@ -17,10 +17,10 @@ var env = &cobra.Command{
 }
 
 func printEnvironment() {
-	fmt.Printf("arch:  %s", runtime.GOARCH)
-	fmt.Printf("os:    %s", runtime.GOOS)
-	fmt.Printf("bin:   %s", os.Args[0])
-	fmt.Printf("gc:    %s", runtime.Version())
-	fmt.Printf("vers:  %s", version)
-	fmt.Printf("build: %s", build)
+	fmt.Printf("arch:  %s\n", runtime.GOARCH)
+	fmt.Printf("os:    %s\n", runtime.GOOS)
+	fmt.Printf("bin:   %s\n", os.Args[0])
+	fmt.Printf("gc:    %s\n", runtime.Version())
+	fmt.Printf("vers:  %s\n", version)
+	fmt.Printf("build: %s\n", build)
 }
