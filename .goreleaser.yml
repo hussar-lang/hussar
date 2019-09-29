@@ -1,0 +1,51 @@
+# This is an example goreleaser.yaml file with some sane defaults.
+# Make sure to check the documentation at http://goreleaser.com
+project_name: hussar
+before:
+  hooks:
+    # you may remove this if you don't use vgo
+    - go mod download
+    # you may remove this if you don't need go generate
+    - go generate ./...
+build:
+  id: "hussar-compiler"
+  main: ./main.go # should be ./cmd/interpreter/main.go after tooling change
+  binary: hussar
+  goos:
+    - darwin
+    - linux
+    - windows
+  goarch:
+    - amd64
+    - arm
+    - arm64
+  goarm:
+    - 6
+    - 7
+archive:
+  replacements:
+    darwin: MacOS
+    linux: Linux
+    windows: Windows
+  wrap_in_directory: true
+  format_overrides:
+      - goos: windows
+        format: zip
+  files:
+      - LICENSE*
+      - README.md
+      - CHANGELOG.md # should generate this
+      - examples/*
+      - design/*.png # should move the Hussar logo for the readme here
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ .Tag }}-next"
+release:
+  prerelease: auto
+changelog:
+  sort: asc
+  filters:
+    exclude:
+    - '^docs:'
+    - '^test:'
