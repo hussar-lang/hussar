@@ -29,16 +29,16 @@ archive:
     windows: Windows
   wrap_in_directory: true
   format_overrides:
-      - goos: windows
-        format: zip
+    - goos: windows
+      format: zip
   files:
-      - LICENSE*
-      - README.md
-      - CHANGELOG.md # should generate this
-      - examples/*
-      - design/*.png # should move the Hussar logo for the readme here
+    - LICENSE*
+    - README.md
+    - CHANGELOG.md # should generate this
+    - examples/*
+    - assets/*.png
 checksum:
-  name_template: 'checksums.txt'
+  name_template: "checksums.txt"
 snapshot:
   name_template: "{{ .Tag }}-next"
 release:
@@ -47,5 +47,6 @@ changelog:
   sort: asc
   filters:
     exclude:
-    - '^docs:'
-    - '^test:'
+      - "^docs:"
+      - "^test:"
+      - "^build:"
