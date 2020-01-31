@@ -5,11 +5,11 @@ import (
 )
 
 var (
-	GitCommit     string
-	VersionString string
+	version = "dev"
+	commit  = "none"
 )
 
 func main() {
-	cmd.Setup(VersionString, GitCommit)
+	cmd.Setup(version, commit)
 	cmd.Execute()
 }
