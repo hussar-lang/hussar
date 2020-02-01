@@ -1,0 +1,6 @@
+kind/bug: ["fix/*", "bug/*"]
+kind/cleanup: ["cleanup/*", "chore/*"]
+kind/feature: ["feature/*", "feat/*"]
+kind/documentation: ["documentation/*", "docs/*"]
+kind/design: design/*
+kind/api-change: ["*breaking*"]
