@@ -107,4 +107,5 @@ changelog:
       - "^docs:"
       - "^test:"
       - "^build:"
+      - "^cleanup:"
       - typo"
