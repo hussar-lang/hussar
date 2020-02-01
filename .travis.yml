@@ -3,27 +3,19 @@ sudo: false
 matrix:
   include:
     - go: 1.x
-      env: LATEST=true
-    - go: 1.8.x
-    - go: 1.9.x
-    - go: 1.10.x
-    - go: 1.11.x
-    - go: tip
-  allow_failures:
-    - go: tip
 
 before_install:
-  - go get -t -v ./...
-  - go get github.com/mitchellh/gox
-  - go get github.com/tcnksm/ghr
+  - go get -t -v ./... # move to go mod soon
   - go get github.com/mattn/goveralls
 
 script:
   - $GOPATH/bin/goveralls -service=travis-ci
 
-# NOTE: temporarily disabled automatic uploading of releases - the releases are supposed to be stable, so manual deploys are doable, and the automated pipeline is only causing issues
-#deploy:
-#  provider: script
-#  script: bash deploy.sh
-#  on:
-#    branch: master
+# calls goreleaser
+deploy:
+- provider: script
+  skip_cleanup: true
+  script: curl -sL https://git.io/goreleaser | bash
+  on:
+    tags: true
+    condition: $TRAVIS_OS_NAME = linux AND $TRAVIS_BRANCH = master
