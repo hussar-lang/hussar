@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://www.hussar.io"><img src=".github/hussar.png" alt="Hussar Logo" width="200"></a>
+  <a href="https://www.hussar.io"><img src="assets/hussar.png" alt="Hussar Logo" width="200"></a>
   <br>
   Hussar
   <br>
@@ -44,6 +44,16 @@ To install Hussar for development, you need Go on your local machine. For instru
 
 ### Installing
 
+For normal usage, you can install Hussar using Homebrew like this:
+
+```console
+$ brew install hussar-lang/tap/hussar
+```
+
+Alternatively, you can download a copy from the [releases](https://github.com/hussar-lang/hussar/releases).
+
+#### For Development
+
 The simplest method to download this project for development is with `go get`. Simply run `go get github.com/hussar-lang/hussar` in your terminal of choice, and the project will be downloaded to your Go path.
 
 An alternative method is to clone the project from this repository directly. You can do this by running `git clone git@github.com:hussar-lang/hussar`. For the Go imports to work correctly without change, you will need to place the downloaded project in `$GOPATH/src/github.com/hussar-lang/hussar`. Once you're inside the project directory, you may have to run `go get ./...` to fetch any dependencies.
@@ -54,17 +64,28 @@ An alternative method is to clone the project from this repository directly. You
 
 You can run scripts with the _run_ subcommand, while passing in the script in question.
 
-```
-hussar run file.hss
+```console
+$ hussar run file.hss
 ```
 
 Another option is to simply call the Hussar command without any subcommands, which will start the interactive mode (or REPL) like so:
 
-```
-hussar
+```console
+$ hussar
 ```
 
 Once in the interactive mode, you can run code and get the result returned. You can exit this mode by calling `exit(0)` or by pressing control-c in your terminal.
+
+For more information about the tooling and which commands are available to you, you can run the `env` subcommand:
+
+```console
+$ hussar env
+arch:  amd64
+os:    darwin
+bin:   hussar
+gc:    go1.12
+vers:  0.4.0
+```
 
 ## Contributing
 
