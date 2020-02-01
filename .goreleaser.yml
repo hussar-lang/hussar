@@ -45,10 +45,6 @@ brews:
     # Default is the root folder.
     folder: Formula
 
-    # Caveats for the user of your binary.
-    # Default is empty.
-    caveats: "How to use this binary"
-
     homepage: "https://hussar.io/"
 
     description: "Interpreter and tooling for the Hussar programming language."
@@ -60,15 +56,11 @@ brews:
     # Custom block for brew.
     # Can be used to specify alternate downloads for devel or head releases.
     # Default is empty.
-    custom_block: |
-      head "https://github.com/hussar-lang/hussar.git"
-      ...
+    custom_block: head "https://github.com/hussar-lang/hussar.git"
 
     # So you can `brew test` your formula.
     # Default is empty.
-    test: |
-      system "#{bin}/hussar env"
-      ...
+    test: system "#{bin}/hussar env"
 
 archives:
   - replacements:
