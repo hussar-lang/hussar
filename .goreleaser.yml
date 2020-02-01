@@ -100,4 +100,6 @@ changelog:
       - "^test:"
       - "^build:"
       - "^cleanup:"
-      - typo"
+      - "^release:"
+      - merge
+      - typo
