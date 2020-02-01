@@ -91,7 +91,7 @@ checksum:
   name_template: "checksums.txt"
 
 snapshot:
-  name_template: "{{ .Tag }}-next"
+  name_template: "{{ .Tag }}-SNAPSHOT-{{ .ShortCommit }}"
 
 release:
   github:
@@ -107,3 +107,4 @@ changelog:
       - "^docs:"
       - "^test:"
       - "^build:"
+      - typo"
