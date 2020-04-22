@@ -2,7 +2,7 @@
 name: Bug report
 about: Create a report to help us improve
 title: ''
-labels: bug, needs-grooming
+labels: bug, triage
 assignees: ''
 
 ---
@@ -26,7 +26,7 @@ If applicable, add screenshots to help explain your problem.
 **Desktop (please complete the following information):**
  - OS: [e.g. Windows]
  - OS version:
- - `go env` output:
+ - `go env` output (if installed from source):
     ```
     here
     ```
