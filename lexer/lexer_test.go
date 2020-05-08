@@ -1,6 +1,7 @@
 package lexer
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/hussar-lang/hussar/token"
@@ -122,7 +123,7 @@ func TestNextToken(t *testing.T) {
 		{token.EOF, ""},
 	}
 
-	l := New(input)
+	l := New(strings.NewReader(input))
 
 	for i, tt := range tests {
 		tok := l.NextToken()
