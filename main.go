@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 
 	"hussar.io/lang/evaluator"
@@ -60,12 +59,12 @@ func main() {
 }
 
 func runFromFile() {
-	file, err := ioutil.ReadFile(*runFile)
+	file, err := os.Open(*runFile)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	l := lexer.New(string(file))
+	l := lexer.New(file)
 	p := parser.New(l)
 	program := p.ParseProgram()
 
