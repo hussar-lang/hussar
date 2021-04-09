@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/hussar-lang/hussar/ast"
-	"github.com/hussar-lang/hussar/token"
+	"hussar.io/lang/ast"
+	"hussar.io/lang/token"
 )
 
 func (p *Parser) parseIntegerLiteral() ast.Expression {

@@ -6,11 +6,11 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/hussar-lang/hussar/evaluator"
-	"github.com/hussar-lang/hussar/lexer"
-	"github.com/hussar-lang/hussar/object"
-	"github.com/hussar-lang/hussar/parser"
-	"github.com/hussar-lang/hussar/repl"
+	"hussar.io/lang/evaluator"
+	"hussar.io/lang/lexer"
+	"hussar.io/lang/object"
+	"hussar.io/lang/parser"
+	"hussar.io/lang/repl"
 
 	log "github.com/sirupsen/logrus"
 	"github.com/ttacon/chalk"

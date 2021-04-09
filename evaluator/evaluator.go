@@ -5,8 +5,8 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/hussar-lang/hussar/ast"
-	"github.com/hussar-lang/hussar/object"
+	"hussar.io/lang/ast"
+	"hussar.io/lang/object"
 )
 
 var (

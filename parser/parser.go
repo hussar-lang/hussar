@@ -3,9 +3,9 @@ package parser
 import (
 	"fmt"
 
-	"github.com/hussar-lang/hussar/ast"
-	"github.com/hussar-lang/hussar/lexer"
-	"github.com/hussar-lang/hussar/token"
+	"hussar.io/lang/ast"
+	"hussar.io/lang/lexer"
+	"hussar.io/lang/token"
 )
 
 const TRACE = false

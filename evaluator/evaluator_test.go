@@ -1,9 +1,9 @@
 package evaluator
 
 import (
-	"github.com/hussar-lang/hussar/lexer"
-	"github.com/hussar-lang/hussar/object"
-	"github.com/hussar-lang/hussar/parser"
+	"hussar.io/lang/lexer"
+	"hussar.io/lang/object"
+	"hussar.io/lang/parser"
 
 	"testing"
 )

@@ -9,7 +9,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/hussar-lang/hussar/token"
+	"hussar.io/lang/token"
 )
 
 // TODO: finish this refactoring with this: https://blog.gopheracademy.com/advent-2014/parsers-lexers/

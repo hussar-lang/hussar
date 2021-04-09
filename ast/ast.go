@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"strings"
 
-	"github.com/hussar-lang/hussar/token"
+	"hussar.io/lang/token"
 )
 
 type Node interface {

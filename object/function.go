@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"strings"
 
-	"github.com/hussar-lang/hussar/ast"
+	"hussar.io/lang/ast"
 )
 
 type Function struct {

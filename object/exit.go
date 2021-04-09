@@ -3,7 +3,7 @@ package object
 import (
 	"bytes"
 
-	"github.com/hussar-lang/hussar/ast"
+	"hussar.io/lang/ast"
 )
 
 type Exit struct {

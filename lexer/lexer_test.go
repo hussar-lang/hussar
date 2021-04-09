@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/hussar-lang/hussar/token"
+	"hussar.io/lang/token"
 )
 
 func TestNextToken(t *testing.T) {
