@@ -1,7 +1,7 @@
 package token
 
 // Improvement: Use byte for better performance (pg12)
-// TODO: implement stringer interface for this type so we can continue to print it in errors, etc
+//go:generate stringer -type=TokenType
 type TokenType int
 
 type Position struct {
