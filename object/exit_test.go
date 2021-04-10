@@ -7,6 +7,10 @@ import (
 	"hussar.dev/lang/object"
 )
 
+func TestExitInterface(t *testing.T) {
+	assert.Implements(t, (*object.Object)(nil), new(object.Exit), "it should implement the interface")
+}
+
 func TestExitType(t *testing.T) {
 	val := &object.Exit{
 		ExitCode: nil,

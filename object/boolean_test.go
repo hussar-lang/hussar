@@ -7,6 +7,10 @@ import (
 	"hussar.dev/lang/object"
 )
 
+func TestBooleanInterface(t *testing.T) {
+	assert.Implements(t, (*object.Object)(nil), new(object.Boolean), "it should implement the interface")
+}
+
 func TestBooleanType(t *testing.T) {
 	val := &object.Boolean{
 		Value: true,

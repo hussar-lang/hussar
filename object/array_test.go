@@ -7,6 +7,10 @@ import (
 	"hussar.dev/lang/object"
 )
 
+func TestArrayInterface(t *testing.T) {
+	assert.Implements(t, (*object.Object)(nil), new(object.Array), "it should implement the interface")
+}
+
 func TestArrayType(t *testing.T) {
 	val := &object.Array{
 		Elements: nil,

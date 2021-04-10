@@ -7,6 +7,10 @@ import (
 	"hussar.dev/lang/object"
 )
 
+func TestStringInterface(t *testing.T) {
+	assert.Implements(t, (*object.Object)(nil), new(object.String), "it should implement the interface")
+}
+
 func TestStringType(t *testing.T) {
 	val := &object.String{
 		Value: "foo",

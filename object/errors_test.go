@@ -7,6 +7,10 @@ import (
 	"hussar.dev/lang/object"
 )
 
+func TestErrorInterface(t *testing.T) {
+	assert.Implements(t, (*object.Object)(nil), new(object.Error), "it should implement the interface")
+}
+
 func TestErrorType(t *testing.T) {
 	val := &object.Error{
 		Severity: "",

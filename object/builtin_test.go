@@ -7,6 +7,10 @@ import (
 	"hussar.dev/lang/object"
 )
 
+func TestBuiltinInterface(t *testing.T) {
+	assert.Implements(t, (*object.Object)(nil), new(object.Builtin), "it should implement the interface")
+}
+
 func TestBuiltinType(t *testing.T) {
 	val := &object.Builtin{
 		Fn: nil,

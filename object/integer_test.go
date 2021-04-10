@@ -7,6 +7,10 @@ import (
 	"hussar.dev/lang/object"
 )
 
+func TestIntegerInterface(t *testing.T) {
+	assert.Implements(t, (*object.Object)(nil), new(object.Integer), "it should implement the interface")
+}
+
 func TestIntegerType(t *testing.T) {
 	val := &object.Integer{
 		Value: 512,

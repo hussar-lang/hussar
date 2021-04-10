@@ -7,6 +7,10 @@ import (
 	"hussar.dev/lang/object"
 )
 
+func TestReturnInterface(t *testing.T) {
+	assert.Implements(t, (*object.Object)(nil), new(object.ReturnValue), "it should implement the interface")
+}
+
 func TestReturnType(t *testing.T) {
 	val := &object.ReturnValue{
 		Value: nil,

@@ -7,6 +7,10 @@ import (
 	"hussar.dev/lang/object"
 )
 
+func TestNullInterface(t *testing.T) {
+	assert.Implements(t, (*object.Object)(nil), new(object.Null), "it should implement the interface")
+}
+
 func TestNullType(t *testing.T) {
 	val := &object.Null{}
 	valType := val.Type()

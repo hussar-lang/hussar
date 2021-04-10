@@ -8,6 +8,10 @@ import (
 	"hussar.dev/lang/object"
 )
 
+func TestFunctionInterface(t *testing.T) {
+	assert.Implements(t, (*object.Object)(nil), new(object.Function), "it should implement the interface")
+}
+
 func TestFunctionType(t *testing.T) {
 	val := &object.Function{
 		Parameters: nil,
