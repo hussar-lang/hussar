@@ -1,21 +1,22 @@
-package ast
+package ast_test
 
 import (
 	"testing"
 
-	"hussar.io/lang/token"
+	"hussar.dev/lang/ast"
+	"hussar.dev/lang/token"
 )
 
 func TestString(t *testing.T) {
-	program := &Program{
-		Statements: []Statement{
-			&VarStatement{
+	program := &ast.Program{
+		Statements: []ast.Statement{
+			&ast.VarStatement{
 				Token: token.Token{Type: token.Var, Literal: "var"},
-				Name: &Identifier{
+				Name: &ast.Identifier{
 					Token: token.Token{Type: token.Identifier, Literal: "myVar"},
 					Value: "myVar",
 				},
-				Value: &Identifier{
+				Value: &ast.Identifier{
 					Token: token.Token{Type: token.Identifier, Literal: "anotherVar"},
 					Value: "anotherVar",
 				},
@@ -30,14 +31,14 @@ func TestString(t *testing.T) {
 
 // Thought this might be useful
 func TestTokenLiteralString(t *testing.T) {
-	program := &Program{
-		Statements: []Statement{
-			&ReturnStatement{
+	program := &ast.Program{
+		Statements: []ast.Statement{
+			&ast.ReturnStatement{
 				Token: token.Token{Type: token.Return, Literal: "return"},
-				ReturnValue: &PrefixExpression{
+				ReturnValue: &ast.PrefixExpression{
 					Token:    token.Token{Type: token.Bang, Literal: "!"},
 					Operator: "!",
-					Right: &Identifier{
+					Right: &ast.Identifier{
 						Token: token.Token{Type: token.Identifier, Literal: "myVar"},
 						Value: "myVar",
 					},

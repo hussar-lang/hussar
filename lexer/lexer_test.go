@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"hussar.io/lang/token"
+	"hussar.dev/lang/token"
 )
 
 func TestNextToken(t *testing.T) {
@@ -104,6 +104,7 @@ func TestNextToken(t *testing.T) {
 		{token.False, "false"},
 		{token.SemiColon, ";"},
 		{token.RBrace, "}"},
+		{token.Comment, "//comment"},
 		{token.Integer, "10"},
 		{token.Equal, "=="},
 		{token.Integer, "10"},
@@ -112,6 +113,7 @@ func TestNextToken(t *testing.T) {
 		{token.NotEqual, "!="},
 		{token.Integer, "9"},
 		{token.SemiColon, ";"},
+		{token.Comment, "// Inline comment"},
 		{token.String, "foobar"},
 		{token.String, "foo bar"},
 		{token.LBracket, "["},
@@ -129,7 +131,7 @@ func TestNextToken(t *testing.T) {
 		tok := l.NextToken()
 
 		if tok.Type != tt.expectedType {
-			t.Fatalf("tests[%d] - literal wrong. expected: %q (%s), got: %q (%s)", i, tt.expectedLiteral, string(tt.expectedType), tok.Literal, string(tok.Type))
+			t.Fatalf("tests[%d] - literal wrong. expected: %q (%s), got: %q (%s)", i, tt.expectedLiteral, tt.expectedType, tok.Literal, tok.Type)
 		}
 	}
 }

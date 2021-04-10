@@ -1,11 +1,12 @@
 package evaluator
 
 import (
+	"bufio"
 	"strings"
 
-	"hussar.io/lang/lexer"
-	"hussar.io/lang/object"
-	"hussar.io/lang/parser"
+	"hussar.dev/lang/lexer"
+	"hussar.dev/lang/object"
+	"hussar.dev/lang/parser"
 
 	"testing"
 )
@@ -419,7 +420,8 @@ func TestBuiltinFunctions(t *testing.T) {
 
 func testEval(input string) object.Object {
 	r := strings.NewReader(input)
-	l := lexer.New(r)
+	b := bufio.NewReader(r)
+	l := lexer.New(b)
 	p := parser.New(l)
 	program := p.ParseProgram()
 	env := object.NewEnvironment()

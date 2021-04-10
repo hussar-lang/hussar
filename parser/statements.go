@@ -1,8 +1,8 @@
 package parser
 
 import (
-	"hussar.io/lang/ast"
-	"hussar.io/lang/token"
+	"hussar.dev/lang/ast"
+	"hussar.dev/lang/token"
 )
 
 func (p *Parser) parseStatement() ast.Statement {

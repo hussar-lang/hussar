@@ -1,12 +1,13 @@
 package parser
 
 import (
+	"bufio"
 	"fmt"
 	"strings"
 	"testing"
 
-	"hussar.io/lang/ast"
-	"hussar.io/lang/lexer"
+	"hussar.dev/lang/ast"
+	"hussar.dev/lang/lexer"
 )
 
 func TestVarStatements(t *testing.T) {
@@ -22,7 +23,8 @@ func TestVarStatements(t *testing.T) {
 
 	for _, tt := range tests {
 		r := strings.NewReader(tt.input)
-		l := lexer.New(r)
+		b := bufio.NewReader(r)
+		l := lexer.New(b)
 		p := New(l)
 		program := p.ParseProgram()
 		checkParserErrors(t, p)
@@ -43,7 +45,7 @@ func TestVarStatements(t *testing.T) {
 	}
 }
 
-func TestReturnStataments(t *testing.T) {
+func TestReturnStatements(t *testing.T) {
 	input := `
         return 5;
         return 10;

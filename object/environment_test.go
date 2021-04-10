@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"hussar.io/lang/object"
+	"hussar.dev/lang/object"
 )
 
 func TestEnvironmentCreation(t *testing.T) {

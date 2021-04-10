@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"hussar.io/lang/ast"
-	"hussar.io/lang/object"
+	"hussar.dev/lang/ast"
+	"hussar.dev/lang/object"
 )
 
 func TestFunctionType(t *testing.T) {
