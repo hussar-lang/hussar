@@ -1,0 +1,28 @@
+package object_test
+
+import (
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"hussar.io/lang/object"
+)
+
+func TestReturnType(t *testing.T) {
+	val := &object.ReturnValue{
+		Value: nil,
+	}
+	valType := val.Type()
+
+	assert.Equal(t, object.ObjectType("RETURN_VALUE"), valType, "the type should match")
+}
+
+func TestReturnInspect(t *testing.T) {
+	val := &object.ReturnValue{
+		Value: &object.Integer{
+			Value: 5,
+		},
+	}
+	valInspect := val.Inspect()
+
+	assert.Equal(t, "5", valInspect, "the string representation should match")
+}

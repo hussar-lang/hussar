@@ -8,12 +8,13 @@ import (
 )
 
 type Function struct {
-	//Name string		TODO: to be used to not have to bind to a variable explicitly
+	//Identifier string		TODO: to be used to not have to bind to a variable explicitly
 	Parameters []*ast.Identifier
 	Body       *ast.BlockStatement
 	Env        *Environment
 }
 
+// Type returns the type of object represented
 func (f *Function) Type() ObjectType { return FUNCTION_OBJ }
 func (f *Function) Inspect() string {
 	var out bytes.Buffer
