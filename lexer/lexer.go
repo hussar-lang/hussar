@@ -142,7 +142,13 @@ func (l *Lexer) NextToken() token.Token {
 			tok = l.newToken(token.Bang, l.currentCh)
 		}
 	case '/':
-		tok = l.newToken(token.Slash, l.currentCh)
+		if l.peekCh == '/' {
+			tok = l.readSingleLineComment()
+		} else if l.peekCh == '*' {
+			tok = l.readMultiLineComment()
+		} else {
+			tok = l.newToken(token.Slash, l.currentCh)
+		}
 	case '*':
 		tok = l.newToken(token.Asterisk, l.currentCh)
 	case '<':
