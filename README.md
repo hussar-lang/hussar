@@ -44,11 +44,9 @@ To install Hussar for development, you need Go on your local machine. For instru
 
 ### Installing
 
-The simplest method to download this project for development is with `go get`. Simply run `go get github.com/hussar-lang/hussar` in your terminal of choice, and the project will be downloaded to your Go path.
+The simplest method to download this project for *development* is with `go get`. Simply run `go get hussar.io/lang` in your terminal of choice, and the project will be downloaded correctly.
 
-An alternative method is to clone the project from this repository directly. You can do this by running `git clone git@github.com:hussar-lang/hussar`. For the Go imports to work correctly without change, you will need to place the downloaded project in `$GOPATH/src/github.com/hussar-lang/hussar`. Once you're inside the project directory, you may have to run `go get ./...` to fetch any dependencies.
-
-<!--If you only need the Hussar tools, without the code, you will soon be able to download and install it simply by executing `curl get.hussar.io | sh`, which will ask you for several options and install the right version automatically. -- shhhh, this is coming soon!  -->
+If you only need the Hussar tools, without the code, you can download one of the binaries on GitHub or from [get.hussar.io](https://get.hussar.io/latest).
 
 ## Usage
 
@@ -74,7 +72,7 @@ Please read [CONTRIBUTING.md](.github/CONTRIBUTING.md) for details on how to con
 
 - [x] Add basic recursion.
 - [ ] Write documentation.
-- [ ] Refactor existing code for better organisation.
+- [ ] [WIP] Refactor existing code for better organisation.
 - [ ] Increase code coverage in critical areas.
 - [ ] (LLVM) compilation.
 - [ ] More types.
