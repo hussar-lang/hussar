@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://www.hussar.io"><img src=".github/hussar.png" alt="Hussar Logo" width="200"></a>
+  <a href="https://www.hussar.dev"><img src=".github/hussar.png" alt="Hussar Logo" width="200"></a>
   <br>
   Hussar
   <br>
@@ -44,9 +44,9 @@ To install Hussar for development, you need Go on your local machine. For instru
 
 ### Installing
 
-The simplest method to download this project for *development* is with `go get`. Simply run `go get hussar.io/lang` in your terminal of choice, and the project will be downloaded correctly.
+The simplest method to download this project for *development* is with `go get`. Simply run `go get hussar.dev/lang` in your terminal of choice, and the project will be downloaded correctly.
 
-If you only need the Hussar tools, without the code, you can download one of the binaries on GitHub or from [get.hussar.io](https://get.hussar.io/latest).
+If you only need the Hussar tools, without the code, you can download one of the binaries on GitHub or from [get.hussar.dev](https://get.hussar.dev/latest).
 
 ## Usage
 
