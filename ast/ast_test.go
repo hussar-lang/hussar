@@ -26,9 +26,7 @@ func TestString(t *testing.T) {
 		},
 	}
 
-	if program.String() != "var myVar = anotherVar;" {
-		t.Errorf("program.String() wrong. Got: %q", program.String())
-	}
+	assert.Equal(t, "var myVar = anotherVar;", program.String(), "the string representation should be the same")
 }
 
 // Thought this might be useful
@@ -49,9 +47,7 @@ func TestTokenLiteralString(t *testing.T) {
 		},
 	}
 
-	if program.String() != "return (!myVar);" {
-		t.Errorf("program.String() wrong. Got: %q", program.String())
-	}
+	assert.Equal(t, "return (!myVar);", program.String(), "the string representation should be the same")
 }
 
 func TestInterfaceImplementation(t *testing.T) {
