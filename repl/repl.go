@@ -1,7 +1,6 @@
 package repl
 
 import (
-	"bufio"
 	"io"
 
 	"github.com/ttacon/chalk"
@@ -15,18 +14,18 @@ import (
 const PROMPT = ">> "
 
 func Start(in io.Reader, out io.Writer) {
-	scanner := bufio.NewScanner(in)
+	//scanner := bufio.NewScanner(in)
 	env := object.NewEnvironment()
 	promptColor := chalk.Cyan.NewStyle().WithTextStyle(chalk.Bold).Style
 
 	for {
 		io.WriteString(out, promptColor(PROMPT))
-		scanned := scanner.Scan()
-		if !scanned {
-			return
-		}
-		line := scanner.Text()
-		l := lexer.New(line)
+		//scanned := scanner.Scan()
+		//if !scanned {
+		//	return
+		//}
+		//line := scanner.Text()
+		l := lexer.New(in)
 		p := parser.New(l)
 
 		program := p.ParseProgram()

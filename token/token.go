@@ -1,13 +1,14 @@
 package token
 
 // Improvement: Use byte for better performance (pg12)
-type TokenType string
+// TODO: implement stringer interface for this type so we can continue to print it in errors, etc
+type TokenType int
 
 type Position struct {
 	Line, Col int
 }
 
-// Improvement: include filename, line and character place to ease debugging
+// Improvement: include filename, line and character place to ease debugging (this is implemented in some form now - modify to make use of it).
 type Token struct {
 	Type     TokenType
 	Literal  string
@@ -67,70 +68,70 @@ const (
 
 // TODO: use the above and apply into this + change all other occurences
 var tokens = [...]string{
-	ILLEGAL: "ILLEGAL"
-	EOF     = "EOF"
-	COMMENT     = "COMMENT"
-	EOL: "EOL"
+	Illegal: "ILLEGAL",
+	EOF:     "EOF",
+	Comment: "COMMENT",
+	EOL:     "EOL",
 
 	// Identifiers + literals
-	IDENT  = "IDENT"
-	INT    = "INT"
-	FLOAT: "FLOAT"
-	STRING = "STRING"
+	Identifier: "IDENT",
+	Integer:    "INT",
+	Float:      "FLOAT",
+	String:     "STRING",
 
 	// Operators
-	ASSIGN   = "="
-	PLUS     = "+"
-	MINUS    = "-"
-	BANG     = "!"
-	ASTERISK = "*"
-	SLASH    = "/"
+	Assign:   "=",
+	Plus:     "+",
+	Minus:    "-",
+	Bang:     "!",
+	Asterisk: "*",
+	Slash:    "/",
 
-	LT = "<"
-	GT = ">"
+	LessThan:    "<",
+	GreaterThan: ">",
 
-	EQ     = "=="
-	NOT_EQ = "!="
+	Equal:    "==",
+	NotEqual: "!=",
 
 	// Delimitors
-	COMMA     = ","
-	SEMICOLON = ";"
+	Comma:     ",",
+	SemiColon: ";",
 
-	LPAREN   = "("
-	RPAREN   = ")"
-	LBRACE   = "{"
-	RBRACE   = "}"
-	LBRACKET = "["
-	RBRACKET = "]"
+	LParen:   "(",
+	RParen:   ")",
+	LBrace:   "{",
+	RBrace:   "}",
+	LBracket: "[",
+	RBracket: "]",
 
 	// Keywords
-	FUNCTION = "FUNCTION"
-	LET      = "LET"
-	TRUE     = "TRUE"
-	FALSE    = "FALSE"
-	IF       = "IF"
-	ELSE     = "ELSE"
-	WHILE    = "WHILE"
-	RETURN   = "RETURN"
-	EXIT     = "EXIT"
-	NIL: "NIL"
+	Function: "FUNCTION",
+	Var:      "VAR",
+	True:     "TRUE",
+	False:    "FALSE",
+	If:       "IF",
+	Else:     "ELSE",
+	While:    "WHILE",
+	Return:   "RETURN",
+	Exit:     "EXIT",
+	Nil:      "NIL",
 }
 
 var keywords = map[string]TokenType{
-	"fn":     FUNCTION,
-	"let":    LET,
-	"true":   TRUE,
-	"false":  FALSE,
-	"if":     IF,
-	"else":   ELSE,
-	"while":  WHILE,
-	"return": RETURN,
-	"exit":   EXIT,
+	"fn":     Function,
+	"var":    Var,
+	"true":   True,
+	"false":  False,
+	"if":     If,
+	"else":   Else,
+	"while":  While,
+	"return": Return,
+	"exit":   Exit,
 }
 
 func LookupIdent(ident string) TokenType {
 	if tok, ok := keywords[ident]; ok {
 		return tok
 	}
-	return IDENT
+	return Identifier
 }

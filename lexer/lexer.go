@@ -14,6 +14,8 @@ import (
 
 // TODO: finish this refactoring with this: https://blog.gopheracademy.com/advent-2014/parsers-lexers/
 
+// TODO: fix this somehow. A lot seems broken.
+
 type Lexer struct {
 	input     *bufio.Reader
 	currentCh rune
@@ -92,8 +94,8 @@ func (l *Lexer) readRune() {
 
 func makePos(line, column int) token.Position {
 	return token.Position{
-		Line:   line,
-		Column: column,
+		Line: line,
+		Col:  column,
 	}
 }
 
@@ -109,80 +111,80 @@ func (l *Lexer) NextToken() token.Token {
 	switch l.currentCh {
 	case '\n':
 		if l.needSemicolon() {
-			tok = l.newToken(token.SEMICOLON, ';')
+			tok = l.newToken(token.SemiColon, ';')
 			l.resetPos()
 		} else {
 			l.trimWhitespace()
 			return l.NextToken()
 		}
-		// case '=':
-		// 	if l.peekCharIs('=') {
-		// 		ch := l.ch
-		// 		l.readChar()
-		// 		literal := string(ch) + string(l.ch)
-		// 		tok = token.Token{Type: token.EQ, Literal: literal}
-		// 	} else {
-		// 		tok = newToken(token.ASSIGN, l.ch)
-		// 	}
-		// case '+':
-		// 	tok = newToken(token.PLUS, l.ch)
-		// case '-':
-		// 	tok = newToken(token.MINUS, l.ch)
-		// case '!':
-		// 	if l.peekCharIs('=') {
-		// 		ch := l.ch
-		// 		l.readChar()
-		// 		literal := string(ch) + string(l.ch)
-		// 		tok = token.Token{Type: token.NOT_EQ, Literal: literal}
-		// 	} else {
-		// 		tok = newToken(token.BANG, l.ch)
-		// 	}
-		// case '/':
-		// 	tok = newToken(token.SLASH, l.ch)
-		// case '*':
-		// 	tok = newToken(token.ASTERISK, l.ch)
-		// case '<':
-		// 	tok = newToken(token.LT, l.ch)
-		// case '>':
-		// 	tok = newToken(token.GT, l.ch)
-		// case ';':
-		// 	tok = newToken(token.SEMICOLON, l.ch)
-		// case ',':
-		// 	tok = newToken(token.COMMA, l.ch)
-		// case '(':
-		// 	tok = newToken(token.LPAREN, l.ch)
-		// case ')':
-		// 	tok = newToken(token.RPAREN, l.ch)
-		// case '{':
-		// 	tok = newToken(token.LBRACE, l.ch)
-		// case '}':
-		// 	tok = newToken(token.RBRACE, l.ch)
-		// case '[':
-		// 	tok = newToken(token.LBRACKET, l.ch)
-		// case ']':
-		// 	tok = newToken(token.RBRACKET, l.ch)
-		// case '"':
-		// 	tok.Type = token.STRING
-		// 	tok.Literal = l.readString()
-		// case 0:
-		// 	tok.Literal = ""
-		// 	tok.Type = token.EOF
-		// default:
-		// 	if isLetter(l.ch) {
-		// 		tok.Literal = l.readIdentifier()
-		// 		tok.Type = token.LookupIdent(tok.Literal)
-		// 		return tok
-		// 	} else if isDigit(l.ch) {
-		// 		tok.Type = token.INT // Improvement: To be changed when adding more numeric types (float, hex, oct, binary)
-		// 		tok.Literal = l.readNumber()
-		// 		return tok
-		// 	} else {
-		// 		tok = newToken(token.ILLEGAL, l.ch)
-		// 	}
+	case '=':
+		if l.peekCharIs('=') {
+			ch := l.ch
+			l.readChar()
+			literal := string(ch) + string(l.ch)
+			tok = token.Token{Type: token.EQ, Literal: literal}
+		} else {
+			tok = newToken(token.Assign, l.ch)
+		}
+	case '+':
+		tok = newToken(token.Plus, l.ch)
+	case '-':
+		tok = newToken(token.Minus, l.ch)
+	case '!':
+		if l.peekCharIs('=') {
+			ch := l.ch
+			l.readChar()
+			literal := string(ch) + string(l.ch)
+			tok = token.Token{Type: token.NotEqual, Literal: literal}
+		} else {
+			tok = newToken(token.Bang, l.ch)
+		}
+	case '/':
+		tok = newToken(token.Slash, l.ch)
+	case '*':
+		tok = newToken(token.Asterisk, l.ch)
+	case '<':
+		tok = newToken(token.LessThan, l.ch)
+	case '>':
+		tok = newToken(token.GreaterThan, l.ch)
+	case ';':
+		tok = newToken(token.SemiColon, l.ch)
+	case ',':
+		tok = newToken(token.Comma, l.ch)
+	case '(':
+		tok = newToken(token.LParen, l.ch)
+	case ')':
+		tok = newToken(token.RParen, l.ch)
+	case '{':
+		tok = newToken(token.LBrace, l.ch)
+	case '}':
+		tok = newToken(token.RBrace, l.ch)
+	case '[':
+		tok = newToken(token.LBracket, l.ch)
+	case ']':
+		tok = newToken(token.RBracket, l.ch)
+	case '"':
+		tok.Type = token.String
+		tok.Literal = l.readString()
+	case 0:
+		tok.Literal = ""
+		tok.Type = token.EOF
+	default:
+		if isVarter(l.currentCh) {
+			tok.Literal = l.readIdentifier()
+			tok.Type = token.LookupIdent(tok.Literal)
+			return tok
+		} else if isDigit(l.currentCh) {
+			tok.Type = token.Integer // Improvement: To be changed when adding more numeric types (float, hex, oct, binary)
+			tok.Literal = l.readNumber()
+			return tok
+		} else {
+			tok = newToken(token.Illegal, l.currentCh)
+		}
 	}
 
-	// l.readChar()
-	// return tok
+	l.readChar()
+	return tok
 }
 
 func (l *Lexer) peekChar() rune {
@@ -196,14 +198,14 @@ func (l *Lexer) resetPos() {
 
 func (l *Lexer) needSemicolon() bool {
 	return l.lastTokenWas(
-		token.IDENT,
-		token.INT,
-		token.STRING,
-		token.NIL,
-		token.RETURN,
-		token.RPAREN,
-		token.RBRACKET,
-		token.RBRACE) && !l.lastTokenWas(token.SEMICOLON)
+		token.Identifier,
+		token.Integer,
+		token.String,
+		token.Nil,
+		token.Return,
+		token.RParen,
+		token.RBracket,
+		token.RBrace) && !l.lastTokenWas(token.SemiColon)
 }
 
 func (l *Lexer) readIdentifier() string {
@@ -226,7 +228,7 @@ func (l *Lexer) readString() token.Token {
 		if l.currentCh == '\n' {
 			return token.Token{
 				Literal:  "Newlines are not allowed in strings",
-				Type:     token.ILLEGAL,
+				Type:     token.Illegal,
 				Pos:      l.curPosition(),
 				Filename: l.currentFile,
 			}
@@ -269,7 +271,7 @@ func (l *Lexer) readString() token.Token {
 
 	return token.Token{
 		Literal:  ident.String(),
-		Type:     token.STRING,
+		Type:     token.String,
 		Pos:      pos,
 		Filename: l.currentFile,
 	}
@@ -290,7 +292,7 @@ func (l *Lexer) readRawString() token.Token {
 
 	return token.Token{
 		Literal:  ident.String(),
-		Type:     token.STRING,
+		Type:     token.String,
 		Pos:      pos,
 		Filename: l.currentFile,
 	}
@@ -300,18 +302,18 @@ func (l *Lexer) readNumber() token.Token {
 	var number bytes.Buffer
 	pos := l.curPosition()
 	base := ""
-	tokenType := token.INT
+	tokenType := token.Integer
 
 	if l.currentCh == '0' && l.peekCh == 'x' {
 		base = "0x"
-		pos.Column-- // Correct for initial 0x
+		pos.Col-- // Correct for initial 0x
 		l.readRune()
 		l.readRune()
 	}
 
 	if l.currentCh == 'x' {
 		base = "0x"
-		pos.Column--
+		pos.Col--
 		l.readRune()
 	}
 
@@ -319,7 +321,7 @@ func (l *Lexer) readNumber() token.Token {
 		l.readRune()
 		return token.Token{
 			Literal:  "Invalid float literal",
-			Type:     token.ILLEGAL,
+			Type:     token.Illegal,
 			Pos:      pos,
 			Filename: l.currentFile,
 		}
@@ -327,16 +329,16 @@ func (l *Lexer) readNumber() token.Token {
 
 	for isDigit(l.currentCh) || isHexDigit(l.currentCh) {
 		if l.currentCh == '.' {
-			if tokenType != token.INT {
+			if tokenType != token.Integer {
 				return token.Token{
 					Literal:  "Invalid float literal",
-					Type:     token.ILLEGAL,
+					Type:     token.Illegal,
 					Pos:      pos,
 					Filename: l.currentFile,
 				}
 			}
 
-			tokenType = token.FLOAT
+			tokenType = token.Float
 		}
 
 		number.WriteRune(l.currentCh)
@@ -357,7 +359,7 @@ func (l *Lexer) readSingleLineComment() token.Token {
 	pos := l.curPosition()
 
 	if l.currentCh == '/' {
-		pos.Column--
+		pos.Col--
 	}
 	l.readRune()
 
@@ -368,7 +370,7 @@ func (l *Lexer) readSingleLineComment() token.Token {
 
 	return token.Token{
 		Literal:  strings.TrimSpace(comment.String()),
-		Type:     token.COMMENT,
+		Type:     token.Comment,
 		Pos:      pos,
 		Filename: l.currentFile,
 	}
@@ -377,7 +379,7 @@ func (l *Lexer) readSingleLineComment() token.Token {
 func (l *Lexer) readMultiLineComment() token.Token {
 	var comment bytes.Buffer
 	pos := l.curPosition()
-	pos.Column--
+	pos.Col--
 	l.readRune()
 
 	for l.currentCh != 0 {
@@ -396,7 +398,7 @@ func (l *Lexer) readMultiLineComment() token.Token {
 
 	return token.Token{
 		Literal:  comment.String(),
-		Type:     token.COMMENT,
+		Type:     token.Comment,
 		Pos:      pos,
 		Filename: l.currentFile,
 	}
@@ -426,12 +428,12 @@ func (l *Lexer) newToken(tokenType token.TokenType, ch rune) token.Token {
 	}
 }
 
-func isLetter(ch rune) bool {
-	return 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z' || ch == '_' || unicode.IsLetter(ch)
+func isVarter(ch rune) bool {
+	return 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z' || ch == '_' || unicode.IsVarter(ch)
 }
 
 func isIdent(ch rune) bool {
-	return isLetter(ch) || (ch != '.' && isDigit(ch))
+	return isVarter(ch) || (ch != '.' && isDigit(ch))
 }
 
 func isDigit(ch rune) bool {
@@ -439,7 +441,7 @@ func isDigit(ch rune) bool {
 }
 
 func isHexDigit(ch rune) bool {
-	return ('a' <= ch && xh <= 'f') || ('A' <= ch && xh <= 'F')
+	return ('a' <= ch && ch <= 'f') || ('A' <= ch && ch <= 'F')
 }
 
 func (l *Lexer) isWhiteSpace(ch rune) bool {

@@ -34,7 +34,7 @@ func Eval(node ast.Node, env *object.Environment) object.Object {
 		}
 		return &object.ReturnValue{Value: val}
 
-	case *ast.LetStatement:
+	case *ast.VarStatement:
 		val := Eval(node.Value, env)
 		if isError(val) {
 			return val
@@ -282,8 +282,7 @@ func evalWhileExpression(we *ast.WhileExpression, env *object.Environment) objec
 		}
 	}
 
-	return NULL
-	return unwrapReturnValue(result) //temp unused to test
+	return unwrapReturnValue(result)
 }
 
 func evalExitLiteral(node *ast.ExitLiteral, env *object.Environment) object.Object {
@@ -384,6 +383,7 @@ func getStringValue(obj object.Object) object.Object {
 	}
 }
 
+// unwrapReturnValue gets the return value from the object.
 func unwrapReturnValue(obj object.Object) object.Object {
 	if returnValue, ok := obj.(*object.ReturnValue); ok {
 		return returnValue.Value
@@ -392,6 +392,9 @@ func unwrapReturnValue(obj object.Object) object.Object {
 	return obj
 }
 
+// isTruthy determines whether a value is truthy or falsy
+//   null and false evaluate to false
+// 	 all other values evaluate to true
 func isTruthy(obj object.Object) bool {
 	// modify to possibly change conditionals to prefer falsy over truthy
 	switch obj {

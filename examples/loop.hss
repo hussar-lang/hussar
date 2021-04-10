@@ -1,9 +1,9 @@
 // A simple while loop example
 
-let a = 10
+var a = 10
 
 while (a > 3) {
-    let a = a - 2;
+    var a = a - 2;
 }
 
 return a;

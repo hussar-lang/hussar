@@ -9,21 +9,21 @@ import (
 func TestString(t *testing.T) {
 	program := &Program{
 		Statements: []Statement{
-			&LetStatement{
-				Token: token.Token{Type: token.LET, Literal: "let"},
+			&VarStatement{
+				Token: token.Token{Type: token.Var, Literal: "var"},
 				Name: &Identifier{
-					Token: token.Token{Type: token.IDENT, Literal: "myVar"},
+					Token: token.Token{Type: token.Identifier, Literal: "myVar"},
 					Value: "myVar",
 				},
 				Value: &Identifier{
-					Token: token.Token{Type: token.IDENT, Literal: "anotherVar"},
+					Token: token.Token{Type: token.Identifier, Literal: "anotherVar"},
 					Value: "anotherVar",
 				},
 			},
 		},
 	}
 
-	if program.String() != "let myVar = anotherVar;" {
+	if program.String() != "var myVar = anotherVar;" {
 		t.Errorf("program.String() wrong. Got: %q", program.String())
 	}
 }
@@ -33,12 +33,12 @@ func TestTokenLiteralString(t *testing.T) {
 	program := &Program{
 		Statements: []Statement{
 			&ReturnStatement{
-				Token: token.Token{Type: token.RETURN, Literal: "return"},
+				Token: token.Token{Type: token.Return, Literal: "return"},
 				ReturnValue: &PrefixExpression{
-					Token:    token.Token{Type: token.BANG, Literal: "!"},
+					Token:    token.Token{Type: token.Bang, Literal: "!"},
 					Operator: "!",
 					Right: &Identifier{
-						Token: token.Token{Type: token.IDENT, Literal: "myVar"},
+						Token: token.Token{Type: token.Identifier, Literal: "myVar"},
 						Value: "myVar",
 					},
 				},

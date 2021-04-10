@@ -1,6 +1,8 @@
 package evaluator
 
 import (
+	"strings"
+
 	"hussar.io/lang/lexer"
 	"hussar.io/lang/object"
 	"hussar.io/lang/parser"
@@ -225,15 +227,15 @@ func TestErrorHandling(t *testing.T) {
 	}
 }
 
-func TestLetStatements(t *testing.T) {
+func TestVarStatements(t *testing.T) {
 	tests := []struct {
 		input    string
 		expected int64
 	}{
-		{"let a = 5; a", 5},
-		{"let a = 5 * 5; a", 25},
-		{"let a = 5; let b = a; b", 5},
-		{"let a = 5; let b = a; let c = a + b + 5; c", 15},
+		{"var a = 5; a", 5},
+		{"var a = 5 * 5; a", 25},
+		{"var a = 5; var b = a; b", 5},
+		{"var a = 5; var b = a; var c = a + b + 5; c", 15},
 	}
 
 	for _, tt := range tests {
@@ -269,11 +271,11 @@ func TestFunctionApplication(t *testing.T) {
 		input    string
 		expected int64
 	}{
-		{"let identity = fn(x) { x; }; identity(5);", 5},
-		{"let identity = fn(x) { return x; }; identity(5);", 5},
-		{"let double = fn(x) { x * 2; }; double(5);", 10},
-		{"let add = fn(x, y) { x + y; }; add(5, 5);", 10},
-		{"let add = fn(x, y) { x + y; }; add(5 + 5, add(5, 5));", 20},
+		{"var identity = fn(x) { x; }; identity(5);", 5},
+		{"var identity = fn(x) { return x; }; identity(5);", 5},
+		{"var double = fn(x) { x * 2; }; double(5);", 10},
+		{"var add = fn(x, y) { x + y; }; add(5, 5);", 10},
+		{"var add = fn(x, y) { x + y; }; add(5 + 5, add(5, 5));", 20},
 		{"fn(x) { x; }(5)", 5},
 	}
 
@@ -284,11 +286,11 @@ func TestFunctionApplication(t *testing.T) {
 
 func TestClosures(t *testing.T) {
 	input := `
-		let newAdder = fn(x) {
+		var newAdder = fn(x) {
 			fn(y) { x + y };
 		};
 
-		let addTwo = newAdder(2);
+		var addTwo = newAdder(2);
 		addTwo(2);
 	`
 
@@ -324,10 +326,10 @@ func TestWhileLoop(t *testing.T) {
 	}{
 		{
 			`
-			let a = 10
+			var a = 10
 
 			while (a > 3) {
-			    let a = a - 2;
+			    var a = a - 2;
 			}
 
 			return a;
@@ -336,10 +338,10 @@ func TestWhileLoop(t *testing.T) {
 		},
 		{
 			`
-			let a = 1
+			var a = 1
 
 			while (a > 3) {
-			    let a = a - 1;
+			    var a = a - 1;
 			}
 
 			return a;
@@ -348,10 +350,10 @@ func TestWhileLoop(t *testing.T) {
 		},
 		{
 			`
-			let a = 10
+			var a = 10
 
 			while (a > 3) {
-				let a = a -1
+				var a = a -1
 			    return 20;
 			}
 
@@ -416,7 +418,8 @@ func TestBuiltinFunctions(t *testing.T) {
 }
 
 func testEval(input string) object.Object {
-	l := lexer.New(input)
+	r := strings.NewReader(input)
+	l := lexer.New(r)
 	p := parser.New(l)
 	program := p.ParseProgram()
 	env := object.NewEnvironment()

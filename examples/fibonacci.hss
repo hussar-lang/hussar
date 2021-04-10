@@ -1,6 +1,6 @@
 // A quick fibonacci example. Currently returns true if it has the correct result.
 
-let fib = fn(x) {
+var fib = fn(x) {
     if (x == 0) {
         return 0;
     }
@@ -12,8 +12,8 @@ let fib = fn(x) {
     return fib(x-1) + fib(x-2);
 }
 
-let main = fn() {
-    let fibTest = fib(10);
+var main = fn() {
+    var fibTest = fib(10);
     if (fibTest != 55) {
         return false;
     } else {

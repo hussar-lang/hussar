@@ -2,25 +2,27 @@ package parser
 
 import (
 	"fmt"
+	"strings"
 	"testing"
 
 	"hussar.io/lang/ast"
 	"hussar.io/lang/lexer"
 )
 
-func TestLetStatements(t *testing.T) {
+func TestVarStatements(t *testing.T) {
 	tests := []struct {
 		input              string
 		expectedIdentifier string
 		expectedValue      interface{}
 	}{
-		{"let x = 5;", "x", 5},
-		{"let y = true;", "y", true},
-		{"let foobar = y;", "foobar", "y"},
+		{"var x = 5;", "x", 5},
+		{"var y = true;", "y", true},
+		{"var foobar = y;", "foobar", "y"},
 	}
 
 	for _, tt := range tests {
-		l := lexer.New(tt.input)
+		r := strings.NewReader(tt.input)
+		l := lexer.New(r)
 		p := New(l)
 		program := p.ParseProgram()
 		checkParserErrors(t, p)
@@ -30,11 +32,11 @@ func TestLetStatements(t *testing.T) {
 		}
 
 		stmt := program.Statements[0]
-		if !testLetStatement(t, stmt, tt.expectedIdentifier) {
+		if !testVarStatement(t, stmt, tt.expectedIdentifier) {
 			return
 		}
 
-		val := stmt.(*ast.LetStatement).Value
+		val := stmt.(*ast.VarStatement).Value
 		if !testLiteralExpression(t, val, tt.expectedValue) {
 			return
 		}
@@ -48,7 +50,8 @@ func TestReturnStataments(t *testing.T) {
         return 993322;
     `
 
-	l := lexer.New(input)
+	r := strings.NewReader(input)
+	l := lexer.New(r)
 	p := New(l)
 
 	program := p.ParseProgram()
@@ -73,7 +76,8 @@ func TestReturnStataments(t *testing.T) {
 func TestIdentifierExpression(t *testing.T) {
 	input := "foobar"
 
-	l := lexer.New(input)
+	r := strings.NewReader(input)
+	l := lexer.New(r)
 	p := New(l)
 	program := p.ParseProgram()
 	checkParserErrors(t, p)
@@ -101,7 +105,8 @@ func TestIdentifierExpression(t *testing.T) {
 func TestIntegerLiteralExpression(t *testing.T) {
 	input := "5;"
 
-	l := lexer.New(input)
+	r := strings.NewReader(input)
+	l := lexer.New(r)
 	p := New(l)
 	program := p.ParseProgram()
 	checkParserErrors(t, p)
@@ -129,7 +134,8 @@ func TestIntegerLiteralExpression(t *testing.T) {
 func TestStringLiteralExpression(t *testing.T) {
 	input := `"hello world";`
 
-	l := lexer.New(input)
+	r := strings.NewReader(input)
+	l := lexer.New(r)
 	p := New(l)
 	program := p.ParseProgram()
 	checkParserErrors(t, p)
@@ -158,7 +164,8 @@ func TestParsingPrefixExpressions(t *testing.T) {
 	}
 
 	for _, tt := range prefixTests {
-		l := lexer.New(tt.input)
+		r := strings.NewReader(tt.input)
+		l := lexer.New(r)
 		p := New(l)
 		program := p.ParseProgram()
 		checkParserErrors(t, p)
@@ -206,7 +213,8 @@ func TestParsingInfixExpressions(t *testing.T) {
 	}
 
 	for _, tt := range infixTests {
-		l := lexer.New(tt.input)
+		r := strings.NewReader(tt.input)
+		l := lexer.New(r)
 		p := New(l)
 		program := p.ParseProgram()
 		checkParserErrors(t, p)
@@ -242,7 +250,8 @@ func TestParsingInfixExpressions(t *testing.T) {
 func TestIfExpression(t *testing.T) {
 	input := `if (x < y) { x }`
 
-	l := lexer.New(input)
+	r := strings.NewReader(input)
+	l := lexer.New(r)
 	p := New(l)
 	program := p.ParseProgram()
 	checkParserErrors(t, p)
@@ -286,7 +295,8 @@ func TestIfExpression(t *testing.T) {
 func TestIfElseExpression(t *testing.T) {
 	input := `if (x < y) { x } else { y }`
 
-	l := lexer.New(input)
+	r := strings.NewReader(input)
+	l := lexer.New(r)
 	p := New(l)
 	program := p.ParseProgram()
 	checkParserErrors(t, p)
@@ -339,7 +349,8 @@ func TestIfElseExpression(t *testing.T) {
 func TestFunctionLiteralParsing(t *testing.T) {
 	input := `fn(x, y) { x + y; }`
 
-	l := lexer.New(input)
+	r := strings.NewReader(input)
+	l := lexer.New(r)
 	p := New(l)
 	program := p.ParseProgram()
 	checkParserErrors(t, p)
@@ -388,7 +399,8 @@ func TestFunctionParameterParsing(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		l := lexer.New(tt.input)
+		r := strings.NewReader(tt.input)
+		l := lexer.New(r)
 		p := New(l)
 		program := p.ParseProgram()
 		checkParserErrors(t, p)
@@ -409,7 +421,8 @@ func TestFunctionParameterParsing(t *testing.T) {
 func TestCallExpressionParsing(t *testing.T) {
 	input := "add(1, 2 * 3, 4 + 5);"
 
-	l := lexer.New(input)
+	r := strings.NewReader(input)
+	l := lexer.New(r)
 	p := New(l)
 	program := p.ParseProgram()
 	checkParserErrors(t, p)
@@ -444,7 +457,8 @@ func TestCallExpressionParsing(t *testing.T) {
 func TestParsingArrayLiterals(t *testing.T) {
 	input := "[1, 2 * 2, 3 + 3]"
 
-	l := lexer.New(input)
+	r := strings.NewReader(input)
+	l := lexer.New(r)
 	p := New(l)
 	program := p.ParseProgram()
 	checkParserErrors(t, p)
@@ -467,7 +481,8 @@ func TestParsingArrayLiterals(t *testing.T) {
 func TestParsingIndexExpressions(t *testing.T) {
 	input := "myArray[1 + 1]"
 
-	l := lexer.New(input)
+	r := strings.NewReader(input)
+	l := lexer.New(r)
 	p := New(l)
 	program := p.ParseProgram()
 	checkParserErrors(t, p)
@@ -599,7 +614,8 @@ func TestOperatorPrecedenceParsing(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		l := lexer.New(tt.input)
+		r := strings.NewReader(tt.input)
+		l := lexer.New(r)
 		p := New(l)
 		program := p.ParseProgram()
 		checkParserErrors(t, p)
@@ -625,25 +641,25 @@ func checkParserErrors(t *testing.T, p *Parser) {
 	t.FailNow()
 }
 
-func testLetStatement(t *testing.T, s ast.Statement, name string) bool {
-	if s.TokenLiteral() != "let" {
-		t.Errorf("s.TokenLiteral is incorrect. Expected: '%s', got: %q", "let", s.TokenLiteral())
+func testVarStatement(t *testing.T, s ast.Statement, name string) bool {
+	if s.TokenLiteral() != "var" {
+		t.Errorf("s.TokenLiteral is incorrect. Expected: '%s', got: %q", "var", s.TokenLiteral())
 		return false
 	}
 
-	letStmt, ok := s.(*ast.LetStatement)
+	varStmt, ok := s.(*ast.VarStatement)
 	if !ok {
-		t.Errorf("s is incorrect type. Expected: %s, got: %T", "*ast.LetStatement", s)
+		t.Errorf("s is incorrect type. Expected: %s, got: %T", "*ast.VarStatement", s)
 		return false
 	}
 
-	if letStmt.Name.Value != name {
-		t.Errorf("letStmt.Name.Value is incorrect. Expected: %s, got: '%s'", name, letStmt.Name.Value)
+	if varStmt.Name.Value != name {
+		t.Errorf("varStmt.Name.Value is incorrect. Expected: %s, got: '%s'", name, varStmt.Name.Value)
 		return false
 	}
 
-	if letStmt.Name.TokenLiteral() != name {
-		t.Errorf("s.Name is incorrect. Expected: %s, got: %s", name, letStmt.Name)
+	if varStmt.Name.TokenLiteral() != name {
+		t.Errorf("s.Name is incorrect. Expected: %s, got: %s", name, varStmt.Name)
 		return false
 	}
 
